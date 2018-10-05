@@ -1,0 +1,70 @@
+{% set version = '0.1.0' %}
+
+package:
+  name: msnpy
+  version: {{ version|replace("-", "_") }}
+
+source:
+  git_url: https://github.com/computational-metabolomics/msnpy.git
+
+build:
+  number: 1
+
+
+requirements:
+  host:
+    - python==2.7.*
+    - setuptools
+    - mono==4.8.1
+    - numpy
+    - scipy
+    - fastcluster
+    - pymzml
+    - h5py
+    - pythonnet
+    - networkx
+    - pandas
+    - mysql-python
+    - mysql-connector-python
+
+  run:
+    - python==2.7.*
+    - setuptools
+    - mono==4.8.1
+    - numpy
+    - scipy
+    - fastcluster
+    - pymzml
+    - h5py
+    - pythonnet
+    - networkx
+    - pandas
+    - mysql-python
+    - mysql-connector-python
+
+
+test:
+  # Python imports
+  imports:
+    - msnpy
+
+  commands:
+    # You can put test commands to be run here.  Use this to test that the
+    # entry points work.
+    - python -m msnpy -h
+
+  # You can also put a file called run_test.py in the recipe that will be run
+  # at test time.
+
+  # requires:
+    # Put any additional test requirements here.  For example
+    # - nose
+
+about:
+  home: http://www.github.com/computational-metabolomics/msnpy
+  license: GNU General Public License v3.0
+  summary: 'Python Package to process and annotate multi-stage mass spectrometry data'
+
+# See
+# http://docs.continuum.io/conda/build.html for
+# more information about meta.yaml
