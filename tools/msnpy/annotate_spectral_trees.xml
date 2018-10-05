@@ -1,0 +1,76 @@
+<tool id="msnpy-annotate-spectral-trees" name="msnpy annotate-spectral-trees" version="1.0">
+  <description>Annotate and/or filter spectral trees.</description>
+  <stdio>
+    <exit_code level="fatal" range="1:"/>
+  </stdio>
+  <version_command>python msnpy annotate-spectral-trees --version</version_command>
+  <command><![CDATA[python msnpy annotate-spectral-trees 
+#if $input and $input is not None:
+--input $input
+#end if
+
+#if $ppm and $ppm is not None:
+--ppm $ppm
+#end if
+$rules
+
+#if $mf-db and $mf-db is not None:
+--mf-db $mf-db
+#end if
+
+#if $output-db and $output-db is not None:
+--output-db $output-db
+#end if
+
+#if $output-trees and $output-trees is not None:
+--output-trees $output-trees
+#end if
+
+#set repeat_var_6 = '" "'.join([ str($var.adducts) for $var in $repeat_6 ])
+-a "$repeat_var_6"
+
+$filter
+> $default]]></command>
+  <inputs>
+    <param area="false" argument="--input" label="Json file containing spectral trees" name="input" type="text"/>
+    <param argument="--ppm" label="Mass tolerance in Parts per million." name="ppm" optional="true" type="float" value="2.0"/>
+    <param argument="--rules" checked="false" label="" name="rules" type="boolean" truevalue="--rules" falsevalue=""/>
+    <param area="false" argument="--mf-db" label="Molecular formulae database" name="mf-db" optional="true" type="text" value="http://multiomics-int.cs.bham.ac.uk"/>
+    <param area="false" argument="--output-db" label="Sqlite database file to store information regarding the annotations." name="output-db" type="text"/>
+    <param area="false" argument="--output-trees" label="Json file containing the annotated spectral trees." name="output-trees" type="text"/>
+    <repeat min="1" name="repeat_6" title="repeat_title">
+      <param area="false" argument="--adducts" label="Adducts e.g. [M+H]+ [M+NH4]+ [M+Na]+ [M+(39K)]+" name="adducts" optional="true" type="text" value="[M+H]+"/>
+    </repeat>
+    <param argument="--filter" checked="false" label="Filter the spectral tree annotations" name="filter" type="boolean" truevalue="--filter" falsevalue=""/>
+  </inputs>
+  <outputs>
+    <data format="txt" hidden="false" name="default"/>
+  </outputs>
+  <help><![CDATA[TODO: Write help]]></help>
+</tool>
+
+<tool id="msnpy_rank-spectral-trees" name="msnpy rank-spectral-trees" version="1.0">
+  <description>Rank annotated spectral trees.</description>
+  <stdio>
+    <exit_code level="fatal" range="1:"/>
+  </stdio>
+  <version_command>python msnpy rank-spectral-trees --version</version_command>
+  <command><![CDATA[python msnpy rank-spectral-trees 
+#if $input and $input is not None:
+--input $input
+#end if
+
+#if $output and $output is not None:
+--output $output
+#end if
+> $default]]></command>
+  <inputs>
+    <param area="false" argument="--input" label="Json file containing annotated spectral trees" name="input" type="text"/>
+    <param area="false" argument="--output" label="Summary of the rankings" name="output" type="text"/>
+  </inputs>
+  <outputs>
+    <data format="txt" hidden="false" name="default"/>
+  </outputs>
+  <help><![CDATA[TODO: Write help]]></help>
+</tool>
+

@@ -1,0 +1,48 @@
+<tool id="msnpy_group-scans" name="msnpy group-scans" version="1.0">
+  <description>Group fragmentation events and/or experiments.</description>
+  <stdio>
+    <exit_code level="fatal" range="1:"/>
+  </stdio>
+  <version_command>python msnpy group-scans --version</version_command>
+  <command><![CDATA[python msnpy group-scans 
+#if $input and $input is not None:
+--input $input
+#end if
+
+#if $output and $output is not None:
+--output $output
+#end if
+
+#if $report and $report is not None:
+--report $report
+#end if
+
+#if $number-of-headers and $number-of-headers is not None:
+--number-of-headers $number-of-headers
+#end if
+
+#if $min-replicates and $min-replicates is not None:
+--min-replicates $min-replicates
+#end if
+
+#if $max-injection-time and $max-injection-time is not None:
+--max-injection-time $max-injection-time
+#end if
+$split
+$merge-ms1
+> $default]]></command>
+  <inputs>
+    <param area="false" argument="--input" label="Mzml or Thermo Scientific raw file" name="input" type="text"/>
+    <param area="false" argument="--output" label="" name="output" type="text"/>
+    <param area="false" argument="--report" label="Summary/Report of groups" name="report" optional="true" type="text"/>
+    <param argument="--number-of-headers" label="" name="number-of-headers" optional="true" type="integer" value="2"/>
+    <param argument="--min-replicates" label="" name="min-replicates" optional="true" type="integer" value="0"/>
+    <param argument="--max-injection-time" label="" name="max-injection-time" optional="true" type="float" value="0"/>
+    <param argument="--split" checked="false" label="" name="split" type="boolean" truevalue="--split" falsevalue=""/>
+    <param argument="--merge-ms1" checked="false" label="" name="merge-ms1" type="boolean" truevalue="--merge-ms1" falsevalue=""/>
+  </inputs>
+  <outputs>
+    <data format="txt" hidden="false" name="default"/>
+  </outputs>
+  <help><![CDATA[TODO: Write help]]></help>
+</tool>

@@ -1,0 +1,89 @@
+<tool id="msnpy_process-scans" name="msnpy process-scans" version="1.0">
+  <description>Process and filter scans.</description>
+  <stdio>
+    <exit_code level="fatal" range="1:"/>
+  </stdio>
+  <version_command>python msnpy process-scans --version</version_command>
+  <command><![CDATA[python msnpy process-scans 
+#if $input and $input is not None:
+--input $input
+#end if
+
+#if $groups and $groups is not None:
+--groups $groups
+#end if
+
+#if $output and $output is not None:
+--output $output
+#end if
+
+#if $function-noise and $function-noise is not None:
+--function-noise $function-noise
+#end if
+
+#if $snr-threshold and $snr-threshold is not None:
+--snr-threshold $snr-threshold
+#end if
+
+#if $ppm and $ppm is not None:
+--ppm $ppm
+#end if
+
+#if $min-fraction and $min-fraction is not None:
+--min-fraction $min-fraction
+#end if
+
+#if $rsd-threshold and $rsd-threshold is not None:
+--rsd-threshold $rsd-threshold
+#end if
+
+#if $normalise and $normalise is not None:
+--normalise $normalise
+#end if
+
+#if $exclusion-list and $exclusion-list is not None:
+--exclusion-list $exclusion-list
+#end if
+
+#if $ringing-threshold and $ringing-threshold is not None:
+--ringing-threshold $ringing-threshold
+#end if
+
+#if $report and $report is not None:
+--report $report
+#end if
+
+#if $block-size and $block-size is not None:
+--block-size $block-size
+#end if
+
+#if $ncpus and $ncpus is not None:
+--ncpus $ncpus
+#end if
+> $default]]></command>
+  <inputs>
+    <param area="false" argument="--input" label="Mzml or Thermo Scientific raw file" name="input" type="text"/>
+    <param area="false" argument="--groups" label="Json or gml file that includes the groups of scans" name="groups" type="text"/>
+    <param area="false" argument="--output" label="HDF5 file to save the peaklist objects to." name="output" type="text"/>
+    <param argument="--function-noise" label="Select function to calculate noise." name="function-noise" type="select">
+      <option value="mad">mad</option>
+      <option value="mean">mean</option>
+      <option value="median">median</option>
+      <option value="noise_packets">noise_packets</option>
+    </param>
+    <param argument="--snr-threshold" label="Signal-to-noise threshold" name="snr-threshold" type="float" value="3.0"/>
+    <param argument="--ppm" label="Mass tolerance in Parts per million to group peaks across scans / mass spectra." name="ppm" optional="true" type="float" value="2.0"/>
+    <param argument="--min-fraction" label="Minimum fraction a peak has to be present. Use 0.0 to not apply this filter." name="min-fraction" optional="true" type="float" value="0.5"/>
+    <param argument="--rsd-threshold" label="Maximum threshold - relative standard deviation (Calculated for peaks that have been measured across a minimum of two scans)." name="rsd-threshold" optional="true" type="float" value="0"/>
+    <param argument="--normalise" label="Normalise scans by Total Ion Current (TIC)" name="normalise" optional="true" type="float" value="0"/>
+    <param argument="--exclusion-list" label="W" name="exclusion-list" optional="true" type="float" value="0"/>
+    <param argument="--ringing-threshold" label="Remove ringing artifacts." name="ringing-threshold" optional="true" type="float" value="0"/>
+    <param area="false" argument="--report" label="Summary/Report of processed mass spectra" name="report" optional="true" type="text"/>
+    <param argument="--block-size" label="The size of each block of peaks to perform clustering on." name="block-size" optional="true" type="integer" value="5000"/>
+    <param argument="--ncpus" label="Number of central processing units (CPUs)." name="ncpus" optional="true" type="integer" value="0"/>
+  </inputs>
+  <outputs>
+    <data format="txt" hidden="false" name="default"/>
+  </outputs>
+  <help><![CDATA[TODO: Write help]]></help>
+</tool>

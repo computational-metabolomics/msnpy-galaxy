@@ -1,0 +1,24 @@
+<tool id="msnpy_rank-spectral-trees" name="msnpy rank-spectral-trees" version="1.0">
+  <description>Rank annotated spectral trees.</description>
+  <stdio>
+    <exit_code level="fatal" range="1:"/>
+  </stdio>
+  <version_command>python msnpy rank-spectral-trees --version</version_command>
+  <command><![CDATA[python msnpy rank-spectral-trees 
+#if $input and $input is not None:
+--input $input
+#end if
+
+#if $output and $output is not None:
+--output $output
+#end if
+> $default]]></command>
+  <inputs>
+    <param area="false" argument="--input" label="Json file containing annotated spectral trees" name="input" type="text"/>
+    <param area="false" argument="--output" label="Summary of the rankings" name="output" type="text"/>
+  </inputs>
+  <outputs>
+    <data format="txt" hidden="false" name="default"/>
+  </outputs>
+  <help><![CDATA[TODO: Write help]]></help>
+</tool>

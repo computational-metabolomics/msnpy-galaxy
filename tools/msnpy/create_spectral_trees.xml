@@ -1,0 +1,29 @@
+<tool id="msnpy_create-spectral-trees" name="msnpy create-spectral-trees" version="1.0">
+  <description>Create spectral trees from processed scan (fragmentation) data.</description>
+  <stdio>
+    <exit_code level="fatal" range="1:"/>
+  </stdio>
+  <version_command>python msnpy create-spectral-trees --version</version_command>
+  <command><![CDATA[python msnpy create-spectral-trees 
+#if $input and $input is not None:
+--input $input
+#end if
+
+#if $groups and $groups is not None:
+--groups $groups
+#end if
+
+#if $output and $output is not None:
+--output $output
+#end if
+> $default]]></command>
+  <inputs>
+    <param area="false" argument="--input" label="HDF5 file (Peaklist objects) from step 'process-scans'." name="input" type="text"/>
+    <param area="false" argument="--groups" label="" name="groups" type="text"/>
+    <param area="false" argument="--output" label="" name="output" type="text"/>
+  </inputs>
+  <outputs>
+    <data format="txt" hidden="false" name="default"/>
+  </outputs>
+  <help><![CDATA[TODO: Write help]]></help>
+</tool>
