@@ -1,48 +1,92 @@
 <tool id="msnpy_group-scans" name="msnpy group-scans" version="1.0">
   <description>Group fragmentation events and/or experiments.</description>
+  <macros>
+        <import>macros.xml</import>
+  </macros>
+  <expand macro="requirements" />
   <stdio>
     <exit_code level="fatal" range="1:"/>
   </stdio>
   <version_command>python msnpy group-scans --version</version_command>
-  <command><![CDATA[python msnpy group-scans 
-#if $input and $input is not None:
---input $input
-#end if
+  <command detect_errors="exit_code"><![CDATA[
+        #if $input.format == "data_collection"
+            #for $fn in $input.source
+                #if str( $fn ).endswith(".dat")
+                    ln -s '$fn' '$fn.name'
+            	    &&
+                #end if
+            #end for
+        #elif $input.format == "single_file"
+            #if str( $input.source ).endswith(".dat")
+                ln -s '$input.source' '$input.source.name'
+                &&
+            #end if
+        #end if
 
-#if $output and $output is not None:
---output $output
-#end if
+         msnpy group-scans
+         #if $input.format == "data_collection"
+            #for $fn in $input.source
+                --input '$fn.name'
+            #end for
+        #elif $input.format == "single_file"
+            --input '$input.source.name'
+        #elif $input.format == "library"
+            --input '$__app__.config.user_library_import_dir/$__user_email__/$input.source'
+        #else
+            --input '$input.source'
+        #end if
 
-#if $report and $report is not None:
---report $report
-#end if
 
-#if $number-of-headers and $number-of-headers is not None:
---number-of-headers $number-of-headers
-#end if
+        #if $number_of_headers and $number_of_headers is not None:
+          --number-of-headers $number_of_headers
+        #end if
 
-#if $min-replicates and $min-replicates is not None:
---min-replicates $min-replicates
-#end if
+        #if $min_replicates and $min_replicates is not None:
+          --min-replicates $min_replicates
+        #end if
 
-#if $max-injection-time and $max-injection-time is not None:
---max-injection-time $max-injection-time
-#end if
-$split
-$merge-ms1
-> $default]]></command>
+        #if $max_injection_time and $max_injection_time is not None:
+          --max-injection-time $max_injection_time
+        #end if
+        $split
+        $merge_ms1
+        --output $grouped_scans
+        --report $report
+        ]]></command>
   <inputs>
-    <param area="false" argument="--input" label="Mzml or Thermo Scientific raw file" name="input" type="text"/>
-    <param area="false" argument="--output" label="" name="output" type="text"/>
-    <param area="false" argument="--report" label="Summary/Report of groups" name="report" optional="true" type="text"/>
-    <param argument="--number-of-headers" label="" name="number-of-headers" optional="true" type="integer" value="2"/>
-    <param argument="--min-replicates" label="" name="min-replicates" optional="true" type="integer" value="0"/>
-    <param argument="--max-injection-time" label="" name="max-injection-time" optional="true" type="float" value="0"/>
+    <expand macro="input_choice" />
+    <param argument="--number-of-headers" label="" name="number_of_headers" optional="true" type="integer" value="2"/>
+    <param argument="--min-replicates" label="" name="min_replicates" optional="true" type="integer" value="1" min="1"/>
+    <param argument="--max-injection-time" label="" name="max_injection_time" optional="true" type="float" value="0"/>
     <param argument="--split" checked="false" label="" name="split" type="boolean" truevalue="--split" falsevalue=""/>
-    <param argument="--merge-ms1" checked="false" label="" name="merge-ms1" type="boolean" truevalue="--merge-ms1" falsevalue=""/>
+    <param argument="--merge-ms1" checked="false" label="" name="merge_ms1" type="boolean" truevalue="--merge-ms1" falsevalue=""/>
   </inputs>
   <outputs>
-    <data format="txt" hidden="false" name="default"/>
+
+    <data format="tsv" hidden="false" name="report" label="${tool.name} on ${on_string}: Report (tsv)"/>
+    <data format="json" hidden="false" name="grouped_scans" label="${tool.name} on ${on_string}: Grouped scans (json)"/>
   </outputs>
-  <help><![CDATA[TODO: Write help]]></help>
+  <help>
+
+Group fragmentation events and/or experiments
+============================================================
+
+
+
+
+
+Description
+----------------
+
+Standard DIMS processing workflow: **Process Scans** -> Replicate Filter -> Align Samples
+    -> [Missing values sample filter] -> Blank Filter -> Sample Filter -> Matrix processing -> Statistics
+
+
+
+
+
+
+
+
+  </help>
 </tool>

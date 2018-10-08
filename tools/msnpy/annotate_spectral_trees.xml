@@ -1,5 +1,9 @@
 <tool id="msnpy-annotate-spectral-trees" name="msnpy annotate-spectral-trees" version="1.0">
   <description>Annotate and/or filter spectral trees.</description>
+  <macros>
+        <import>macros.xml</import>
+  </macros>
+  <expand macro="requirements" />
   <stdio>
     <exit_code level="fatal" range="1:"/>
   </stdio>

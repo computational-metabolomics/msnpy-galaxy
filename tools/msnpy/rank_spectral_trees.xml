@@ -1,5 +1,9 @@
 <tool id="msnpy_rank-spectral-trees" name="msnpy rank-spectral-trees" version="1.0">
   <description>Rank annotated spectral trees.</description>
+  <macros>
+        <import>macros.xml</import>
+  </macros>
+  <expand macro="requirements" />
   <stdio>
     <exit_code level="fatal" range="1:"/>
   </stdio>
