@@ -8,26 +8,32 @@
     <exit_code level="fatal" range="1:"/>
   </stdio>
   <version_command>python msnpy create-spectral-trees --version</version_command>
-  <command><![CDATA[python msnpy create-spectral-trees 
-#if $input and $input is not None:
---input $input
-#end if
+  <command><![CDATA[
+          msnpy create-spectral-trees
 
-#if $groups and $groups is not None:
---groups $groups
-#end if
+          #if $input and $input is not None:
+            --input $input
+          #end if
 
-#if $output and $output is not None:
---output $output
-#end if
-> $default]]></command>
+          #if $groups and $groups is not None:
+            --groups $groups
+          #end if
+
+
+          --output $spectral_trees
+
+  ]]></command>
   <inputs>
-    <param area="false" argument="--input" label="HDF5 file (Peaklist objects) from step 'process-scans'." name="input" type="text"/>
-    <param area="false" argument="--groups" label="" name="groups" type="text"/>
-    <param area="false" argument="--output" label="" name="output" type="text"/>
+    <param name="input" type="data" format="hdf5" label="HDF5 file (Peaklist objects) from step 'process-scans'." argument="--source" >
+      <validator type="empty_field" />
+    </param>
+    <param name="groups" type="data" format="json" label="Groups" help="Json or gml file that includes the groups of scans" argument="--groups">
+      <validator type="empty_field" />
+    </param>
+
   </inputs>
   <outputs>
-    <data format="txt" hidden="false" name="default"/>
+    <data format="json" hidden="false" name="spectral_trees" label="${tool.name} on ${on_string}: Spectral trees (json)"/>
   </outputs>
   <help><![CDATA[TODO: Write help]]></help>
 </tool>

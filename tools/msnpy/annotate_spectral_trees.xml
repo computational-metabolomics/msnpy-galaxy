@@ -8,30 +8,31 @@
     <exit_code level="fatal" range="1:"/>
   </stdio>
   <version_command>python msnpy annotate-spectral-trees --version</version_command>
-  <command><![CDATA[python msnpy annotate-spectral-trees 
-#if $input and $input is not None:
---input $input
-#end if
+  <command><![CDATA[
+      msnpy annotate-spectral-trees
+      #if $input and $input is not None:
+        --input $input
+      #end if
 
-#if $ppm and $ppm is not None:
---ppm $ppm
-#end if
-$rules
+      #if $ppm and $ppm is not None:
+        --ppm $ppm
+      #end if
+      $rules
 
-#if $mf-db and $mf-db is not None:
---mf-db $mf-db
-#end if
+      #if $mf-db and $mf-db is not None:
+        --mf-db $mf-db
+      #end if
 
-#if $output-db and $output-db is not None:
---output-db $output-db
-#end if
+      #if $output-db and $output-db is not None:
+        --output-db $output-db
+      #end if
 
-#if $output-trees and $output-trees is not None:
---output-trees $output-trees
-#end if
+      #if $output-trees and $output-trees is not None:
+        --output-trees $output-trees
+      #end if
 
-#set repeat_var_6 = '" "'.join([ str($var.adducts) for $var in $repeat_6 ])
--a "$repeat_var_6"
+      #set repeat_var_6 = '" "'.join([ str($var.adducts) for $var in $repeat_6 ])
+        -a "$repeat_var_6"
 
 $filter
 > $default]]></command>
@@ -52,29 +53,3 @@ $filter
   </outputs>
   <help><![CDATA[TODO: Write help]]></help>
 </tool>
-
-<tool id="msnpy_rank-spectral-trees" name="msnpy rank-spectral-trees" version="1.0">
-  <description>Rank annotated spectral trees.</description>
-  <stdio>
-    <exit_code level="fatal" range="1:"/>
-  </stdio>
-  <version_command>python msnpy rank-spectral-trees --version</version_command>
-  <command><![CDATA[python msnpy rank-spectral-trees 
-#if $input and $input is not None:
---input $input
-#end if
-
-#if $output and $output is not None:
---output $output
-#end if
-> $default]]></command>
-  <inputs>
-    <param area="false" argument="--input" label="Json file containing annotated spectral trees" name="input" type="text"/>
-    <param area="false" argument="--output" label="Summary of the rankings" name="output" type="text"/>
-  </inputs>
-  <outputs>
-    <data format="txt" hidden="false" name="default"/>
-  </outputs>
-  <help><![CDATA[TODO: Write help]]></help>
-</tool>
-
