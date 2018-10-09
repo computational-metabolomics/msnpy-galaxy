@@ -8,21 +8,19 @@
     <exit_code level="fatal" range="1:"/>
   </stdio>
   <version_command>python msnpy rank-spectral-trees --version</version_command>
-  <command><![CDATA[python msnpy rank-spectral-trees 
-#if $input and $input is not None:
---input $input
-#end if
+  <command><![CDATA[
+    msnpy rank-spectral-trees
+      --input $input
+      --output $output
 
-#if $output and $output is not None:
---output $output
-#end if
-> $default]]></command>
+  ]]></command>
   <inputs>
-    <param area="false" argument="--input" label="Json file containing annotated spectral trees" name="input" type="text"/>
-    <param area="false" argument="--output" label="Summary of the rankings" name="output" type="text"/>
+    <param name="input" type="data" format="json" label="Spectral trees" help="Json file containing annotated spectral trees" argument="--input">
+      <validator type="empty_field" />
+    </param>
   </inputs>
   <outputs>
-    <data format="txt" hidden="false" name="default"/>
+    <data format="json" hidden="false" name="output" label="${tool.name} on ${on_string}: Ranked trees (json)"/>
   </outputs>
   <help><![CDATA[TODO: Write help]]></help>
 </tool>

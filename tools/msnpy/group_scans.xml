@@ -9,33 +9,14 @@
   </stdio>
   <version_command>python msnpy group-scans --version</version_command>
   <command detect_errors="exit_code"><![CDATA[
-        #if $input.format == "data_collection"
-            #for $fn in $input.source
-                #if str( $fn ).endswith(".dat")
-                    ln -s '$fn' '$fn.name'
-            	    &&
-                #end if
-            #end for
-        #elif $input.format == "single_file"
-            #if str( $input.source ).endswith(".dat")
-                ln -s '$input.source' '$input.source.name'
-                &&
-            #end if
+        #if $input and $input is not None and str( $input ).endswith(".dat")
+           ln -s '$input' '$input.name'
+           &&
         #end if
 
-         msnpy group-scans
-         #if $input.format == "data_collection"
-            #for $fn in $input.source
-                --input '$fn.name'
-            #end for
-        #elif $input.format == "single_file"
-            --input '$input.source.name'
-        #elif $input.format == "library"
-            --input '$__app__.config.user_library_import_dir/$__user_email__/$input.source'
-        #else
-            --input '$input.source'
-        #end if
+        msnpy group-scans
 
+        --input '$input.name'
 
         #if $number_of_headers and $number_of_headers is not None:
           --number-of-headers $number_of_headers
@@ -54,7 +35,9 @@
         --report $report
         ]]></command>
   <inputs>
-    <expand macro="input_choice" />
+    <param name="input" type="data" format="mzml,thermo.raw,raw" label="Single *.mzml or *.raw" argument="--input" >
+      <validator type="empty_field" />
+    </param>
     <param argument="--number-of-headers" label="" name="number_of_headers" optional="true" type="integer" value="2"/>
     <param argument="--min-replicates" label="" name="min_replicates" optional="true" type="integer" value="1" min="1"/>
     <param argument="--max-injection-time" label="" name="max_injection_time" optional="true" type="float" value="0"/>
@@ -62,7 +45,6 @@
     <param argument="--merge-ms1" checked="false" label="" name="merge_ms1" type="boolean" truevalue="--merge-ms1" falsevalue=""/>
   </inputs>
   <outputs>
-
     <data format="tsv" hidden="false" name="report" label="${tool.name} on ${on_string}: Report (tsv)"/>
     <data format="json" hidden="false" name="grouped_scans" label="${tool.name} on ${on_string}: Grouped scans (json)"/>
   </outputs>
@@ -71,19 +53,8 @@
 Group fragmentation events and/or experiments
 ============================================================
 
-
-
-
-
 Description
 ----------------
-
-Standard DIMS processing workflow: **Process Scans** -> Replicate Filter -> Align Samples
-    -> [Missing values sample filter] -> Blank Filter -> Sample Filter -> Matrix processing -> Statistics
-
-
-
-
 
 
 

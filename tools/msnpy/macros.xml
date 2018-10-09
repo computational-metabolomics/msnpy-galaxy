@@ -1,7 +1,7 @@
 <macros>
     <xml name="requirements">
         <requirements>
-            <requirement type="package" version="1.2.0">dimspy</requirement>
+            <requirement type="package" version="0.2.0">msnpy</requirement>
         </requirements>
     </xml>
 
@@ -31,9 +31,7 @@
                 </param>
             </when>
             <when value="single_file">
-                <param name="source" type="data" format="mzml,thermo.raw,raw" label="Single *.mzml or *.raw" argument="--source" >
-                    <validator type="empty_field" />
-                </param>
+
             </when>
         </conditional>
     </xml>

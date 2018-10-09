@@ -24,7 +24,7 @@
 
   ]]></command>
   <inputs>
-    <param name="input" type="data" format="hdf5" label="HDF5 file (Peaklist objects) from step 'process-scans'." argument="--source" >
+    <param name="input" type="data" format="hdf5" label="HDF5 file (Peaklist objects) from step 'process-scans'." argument="--input" >
       <validator type="empty_field" />
     </param>
     <param name="groups" type="data" format="json" label="Groups" help="Json or gml file that includes the groups of scans" argument="--groups">
