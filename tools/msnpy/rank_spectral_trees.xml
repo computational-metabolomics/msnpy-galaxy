@@ -20,7 +20,7 @@
     </param>
   </inputs>
   <outputs>
-    <data format="json" hidden="false" name="output" label="${tool.name} on ${on_string}: Ranked trees (json)"/>
+    <data format="tsv" hidden="false" name="output" label="${tool.name} on ${on_string}: Ranked trees (json)"/>
   </outputs>
   <help><![CDATA[TODO: Write help]]></help>
 </tool>

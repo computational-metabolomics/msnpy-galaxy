@@ -1,7 +1,7 @@
 <macros>
     <xml name="requirements">
         <requirements>
-            <requirement type="package" version="0.2.0">msnpy</requirement>
+            <requirement type="package" version="0.1.5">msnpy</requirement>
         </requirements>
     </xml>
 

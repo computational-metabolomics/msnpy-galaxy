@@ -93,7 +93,7 @@
   </inputs>
   <outputs>
     <data format="tsv" hidden="false" name="report" label="${tool.name} on ${on_string}: Processed Peaklists (report)"/>
-    <data format="hdf5" hidden="false" name="processed_peaklists" label="${tool.name} on ${on_string}: Processed Peaklists (hdf5)"/>
+    <data format="h5" hidden="false" name="processed_peaklists" label="${tool.name} on ${on_string}: Processed Peaklists (hdf5)"/>
   </outputs>
   <help><![CDATA[TODO: Write help]]></help>
 </tool>
