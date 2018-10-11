@@ -52,14 +52,14 @@
     <test>
       <param name="input" value="A06_Polar_Daph_WAX1_Phenyl_LCMS_Pos_DIMSn.raw" ftype="thermo.raw"/>
       <param name="merge_ms1" truevalue="--merge-ms1"/>
-      <output name="grouped_scans" value="grouped_scans.json"/>
-      <output name="grouped_scans_report" value="grouped_scans_report.tsv"/>
+      <output name="grouped_scans" value="A06_grouped_scans.json"/>
+      <output name="grouped_scans_report" value="A06_grouped_scans_report.tsv"/>
     </test>
 
     <test>
       <param name="input" value="A06_Polar_Daph_WAX1_Phenyl_LCMS_Pos_DIMSn.raw" ftype="thermo.raw"/>
-      <output name="grouped_scans" value="grouped_scans_not_merged.json"/>
-      <output name="grouped_scans_report" value="grouped_scans_report_not_merged.tsv"/>
+      <output name="grouped_scans" value="A06_grouped_scans_not_merged.json"/>
+      <output name="grouped_scans_report" value="A06_grouped_scans_report_not_merged.tsv"/>
     </test>
 
 
