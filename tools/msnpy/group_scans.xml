@@ -32,7 +32,7 @@
         $split
         $merge_ms1
         --output $grouped_scans
-        --report $report
+        --report $grouped_scans_report
         ]]></command>
   <inputs>
     <param name="input" type="data" format="mzml,thermo.raw,raw" label="Single *.mzml or *.raw" argument="--input" >
@@ -45,9 +45,26 @@
     <param argument="--merge-ms1" checked="false" label="" name="merge_ms1" type="boolean" truevalue="--merge-ms1" falsevalue=""/>
   </inputs>
   <outputs>
-    <data format="tsv" hidden="false" name="report" label="${tool.name} on ${on_string}: Report (tsv)"/>
-    <data format="json" hidden="false" name="grouped_scans" label="${tool.name} on ${on_string}: Grouped scans (json)"/>
+    <data format="tsv" hidden="false" name="grouped_scans_report" label="${tool.name} on ${on_string}: Report (tsv)"  from_work_dir="grouped_scans_report.tsv"/>
+    <data format="json" hidden="false" name="grouped_scans" label="${tool.name} on ${on_string}: Grouped scans (json)" from_work_dir="grouped_scans.json"/>
   </outputs>
+  <tests>
+    <test>
+      <param name="input" value="A06_Polar_Daph_WAX1_Phenyl_LCMS_Pos_DIMSn.raw" ftype="thermo.raw"/>
+      <param name="merge_ms1" truevalue="--merge-ms1"/>
+      <output name="grouped_scans" value="grouped_scans.json"/>
+      <output name="grouped_scans_report" value="grouped_scans_report.tsv"/>
+    </test>
+
+    <test>
+      <param name="input" value="A06_Polar_Daph_WAX1_Phenyl_LCMS_Pos_DIMSn.raw" ftype="thermo.raw"/>
+      <output name="grouped_scans" value="grouped_scans_not_merged.json"/>
+      <output name="grouped_scans_report" value="grouped_scans_report_not_merged.tsv"/>
+    </test>
+
+
+  </tests>
+
   <help>
 
 Group fragmentation events and/or experiments
