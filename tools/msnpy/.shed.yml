@@ -1,0 +1,13 @@
+owner: tomnl
+remote_repository_url: https://github.com/computational-metabolomics/msnpy-galaxy
+homepage_url:  https://github.com/computational-metabolomics/msnpy-galaxy
+categories: ["Metabolomics"]
+description: "[Metabolomics][DIMS][MS/MS][MSn] MSnPy - A python package and CLI package for processing and annotating molecular formulars for MS/MS and MSn"
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "[Metabolomics][DIMS][MS/MS][MSn] msPurity - {{ tool_name }} {{description}}"
+suite:
+  name: "suite_msnpy"
+  description: "wrapper for MSnPy CLI"
+  long_description: "Galaxy wrappers for the MSnPy CLI for processing and annotating molecular formulars for MS/MS and MSn"
+
