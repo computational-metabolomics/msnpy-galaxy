@@ -10,18 +10,13 @@
   <version_command>python msnpy create-spectral-trees --version</version_command>
   <command><![CDATA[
           msnpy create-spectral-trees
-
           #if $input and $input is not None:
             --input $input
           #end if
-
           #if $groups and $groups is not None:
             --groups $groups
           #end if
-
-
           --output $spectral_trees
-
   ]]></command>
   <inputs>
     <param name="input" type="data" format="h5" label="HDF5 file (Peaklist objects) from step 'process-scans'." argument="--input" >
@@ -35,5 +30,24 @@
   <outputs>
     <data format="json" hidden="false" name="spectral_trees" label="${tool.name} on ${on_string}: Spectral trees (json)"/>
   </outputs>
-  <help><![CDATA[TODO: Write help]]></help>
+  <tests>
+    <test>
+      <param name="input" value="A06_processed_peaklists.hdf5" ftype="h5"/>
+      <param name="groups" value="A06_grouped_scans.json" ftype="json"/>
+      <output name="spectral_trees" value="A06_spectral_trees.json"/>
+    </test>
+  </tests>
+
+  <help>
+Create spectral trees from processed scan (fragmentation) data.
+==========================================================================
+
+Description
+----------------
+
+
+
+
+
+  </help>
 </tool>

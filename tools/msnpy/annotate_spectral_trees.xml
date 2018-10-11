@@ -48,6 +48,24 @@
         <data format="json" hidden="false" name="output_trees" label="${tool.name} on ${on_string}: Spectral trees (json)"/>
         <data format="sqlite" hidden="false" name="annotation_db" label="${tool.name} on ${on_string}: Annotation db (sqlite)"/>
   </outputs>
+  <tests>
+    <test>
+      <param name="input" value="A06_spectral_trees.json" ftype="json"/>
 
-  <help><![CDATA[TODO: Write help]]></help>
+      <output name="output_trees" value="A06_annotated_trees.json"/>
+      <output name="annotations_db" value="A06_mf_annotation_db.sqlite"/>
+    </test>
+  </tests>
+
+  <help>
+Annotate and filter spectral trees
+==========================================================================
+
+Description
+----------------
+
+
+
+
+  </help>
 </tool>
