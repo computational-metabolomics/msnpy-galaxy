@@ -1,7 +1,7 @@
 <macros>
     <xml name="requirements">
         <requirements>
-            <requirement type="package" version="0.1.5">msnpy</requirement>
+            <requirement type="package" version="0.1.7">msnpy</requirement>
         </requirements>
     </xml>
 
@@ -34,6 +34,16 @@
 
             </when>
         </conditional>
+    </xml>
+
+    <xml name="citations">
+        <citations>
+            <citation type="doi">10.1038/nprot.2016.156</citation>
+            <citation type="doi">10.1038/sdata.2014.12</citation>
+            <citation type="doi">10.1021/ac062446p</citation>
+            <citation type="doi">10.1021/ac2001803</citation>
+            <yield />
+        </citations>
     </xml>
 
 </macros>
