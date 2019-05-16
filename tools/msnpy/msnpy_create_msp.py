@@ -39,16 +39,8 @@ else:
 pls = hdf5_portal.load_peaklists_from_hdf5('test-data/A06_processed_peaklists.hdf5')
 
 # first merge the ms2 and ms3 peaklists
-#pm = peak_alignment.align_peaks([pl[2],pl[3]], ppm=5)
-#pln = pm.to_peaklist('{} <#> {}'.format(pl[2].ID, pl[3].ID))
 
 
-trees = []
-with open("test-data/A06_annotated_trees_backup.json") as f:
-    for x in f:
-        trees.append(ast.literal_eval(x))
-
-print(trees)
 with open("test-data/test.msp", "w+") as f:
     # Loop through peaklist
     for pl in pls:
