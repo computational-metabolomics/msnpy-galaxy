@@ -25,7 +25,7 @@
   <tests>
     <test>
       <param name="input" value="A06_annotated_trees.json" ftype="json"/>
-      <output name="output" value="A06_ranked_trees.json"/>
+      <output name="ranked_trees" value="A06_ranked_trees.tsv"/>
     </test>
   </tests>
   <help>

@@ -1,6 +1,6 @@
 package:
   name: msnpy
-  version: 0.1.5
+  version: 0.1.7
 
 
 source:
@@ -16,14 +16,16 @@ build:
 
 requirements:
   host:
-    - python
+    - 'python 2.7.*'
     - dimspy
+    - pymzml <=2.0.0
     - pandas
     - networkx
     - mysql-connector-python
   run:
-    - python
+    - 'python 2.7.*'
     - dimspy
+    - pymzml <=2.0.0
     - pandas
     - networkx
     - mysql-connector-python

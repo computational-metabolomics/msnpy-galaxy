@@ -37,7 +37,7 @@
     </param>
     <param argument="--ppm" label="Mass tolerance in Parts per million." name="ppm" optional="true" type="float" value="2.0"/>
     <param argument="--rules" checked="false" label="" name="rules" type="boolean" truevalue="--rules" falsevalue=""/>
-    <param area="false" argument="--mf-db" label="Molecular formulae database" name="mf_db" optional="true" type="text" value="http://multiomics-int.cs.bham.ac.uk"/>
+    <param area="false" argument="--mf-db" label="Molecular formulae database" name="mf_db" optional="true" type="text" value="https://mfdb.bham.ac.uk"/>
     <param argument="--filter" checked="true" label="Filter the spectral tree annotations" name="filter" type="boolean" truevalue="--filter" falsevalue=""/>
     <repeat min="1" name="repeat_6" title="repeat_title">
       <param area="false" argument="--adducts" label="Adducts e.g. [M+H]+ [M+NH4]+ [M+Na]+ [M+(39K)]+" name="adducts" optional="true" type="text" value="[M+H]+"/>
