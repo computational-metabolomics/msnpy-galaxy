@@ -1,4 +1,4 @@
-<tool id="msnpy_group-scans" name="msnpy group-scans" version="1.0">
+<tool id="msnpy_group_scans" name="msnpy group-scans" version="0.0.1">
   <description>Group fragmentation events and/or experiments.</description>
   <macros>
         <import>macros.xml</import>

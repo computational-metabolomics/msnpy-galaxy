@@ -1,4 +1,4 @@
-<tool id="msnpy-annotate-spectral-trees" name="msnpy annotate-spectral-trees" version="1.0">
+<tool id="msnpy_annotate_spectral_trees" name="msnpy annotate-spectral-trees" version="0.0.1">
   <description>Annotate and/or filter spectral trees.</description>
   <macros>
         <import>macros.xml</import>

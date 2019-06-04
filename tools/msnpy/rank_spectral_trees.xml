@@ -1,4 +1,4 @@
-<tool id="msnpy_rank-spectral-trees" name="msnpy rank-spectral-trees" version="1.0">
+<tool id="msnpy_rank_spectral_trees" name="msnpy rank-spectral-trees" version="0.0.1">
   <description>Rank annotated spectral trees.</description>
   <macros>
         <import>macros.xml</import>

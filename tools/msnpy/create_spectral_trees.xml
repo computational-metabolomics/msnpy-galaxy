@@ -1,4 +1,4 @@
-<tool id="msnpy_create-spectral-trees" name="msnpy create-spectral-trees" version="1.0">
+<tool id="msnpy_create_spectral_trees" name="msnpy create-spectral-trees" version="0.0.1">
   <description>Create spectral trees from processed scan (fragmentation) data.</description>
     <macros>
         <import>macros.xml</import>
