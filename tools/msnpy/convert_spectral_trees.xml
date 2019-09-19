@@ -1,4 +1,4 @@
-<tool id="msnpy_convert_spectral_trees" name="msnpy convert-spectral-trees" version="0.0.1">
+<tool id="msnpy_convert_spectral_trees" name="msnpy convert-spectral-trees" version="@TOOL_VERSION@+galaxy@GALAXY_TOOL_VERSION@">
   <description>Convert spectral trees to MSP files or dimspy PeakList objects</description>
   <macros>
         <import>macros.xml</import>
@@ -145,4 +145,5 @@ Description
 
 
   </help>
+  <expand macro="citations" />
 </tool>
