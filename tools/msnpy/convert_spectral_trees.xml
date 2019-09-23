@@ -122,14 +122,14 @@
   </outputs>
   <tests>
     <test>
-      <param name="input_json" value="A06_annotated_trees.json" ftype="json"/>
+      <param name="input_json" value="A08_annotated_trees.json" ftype="json"/>
 
-      <output name="merged_hdf5" value="A06_spec_trees_non_merged_pls.hdf5"/>
-      <output name="non_merged_hdf5" value="A06_spec_trees_merged_pls.hdf5"/>
-      <output name="precursors_hdf5" value="A06_spec_trees_ms1_precursors_pls.hdf5"/>
-      <output name="merged_msp" value="A06_spec_trees_non_merged_pls.msp"/>
-      <output name="non_merged_msp" value="A06_spec_trees_merged_pls.msp"/>
-      <output name="precursors_msp" value="A06_spec_trees_ms1_precursors_pls.msp"/>
+      <output name="merged_hdf5" value="A08_spec_trees_non_merged_pls.hdf5"/>
+      <output name="non_merged_hdf5" value="A08_spec_trees_merged_pls.hdf5"/>
+      <output name="precursors_hdf5" value="A08_spec_trees_ms1_precursors_pls.hdf5"/>
+      <output name="merged_msp" value="A08_spec_trees_non_merged_pls.msp"/>
+      <output name="non_merged_msp" value="A08_spec_trees_merged_pls.msp"/>
+      <output name="precursors_msp" value="A08_spec_trees_ms1_precursors_pls.msp"/>
 
     </test>
   </tests>

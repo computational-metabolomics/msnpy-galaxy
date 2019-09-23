@@ -32,9 +32,9 @@
   </outputs>
   <tests>
     <test>
-      <param name="input" value="A06_processed_peaklists.hdf5" ftype="h5"/>
-      <param name="groups" value="A06_grouped_scans.json" ftype="json"/>
-      <output name="spectral_trees" value="A06_spectral_trees.json"/>
+      <param name="input" value="A08_processed_peaklists.hdf5" ftype="h5"/>
+      <param name="groups" value="A08_grouped_scans.json" ftype="json"/>
+      <output name="spectral_trees" value="A08_spectral_trees.json"/>
     </test>
   </tests>
 
