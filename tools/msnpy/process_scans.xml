@@ -98,7 +98,7 @@
       <param name="input" value="A06_Polar_Daph_WAX1_Phenyl_LCMS_Pos_DIMSn.raw" ftype="thermo.raw"/>
       <param name="groups" value="A06_grouped_scans.json" ftype="json"/>
       <output name="processed_peaklists_report" value="A06_processed_peaklists_report.tsv"/>
-      <!--NOT sure why this is not passing - seems to be different with each creation - perhaps unique identifier is used?-->
+      <!--NOT sure why this is not passing - seems to be different with each creation - is this a known issue with hdf5?-->
       <!--<output name="processed_peaklists" value="A06_processed_peaklists.hdf5"/>-->
     </test>
   </tests>

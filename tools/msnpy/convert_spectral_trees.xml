@@ -43,7 +43,7 @@
     <conditional name="input_type_cond">
       <param name="input_type" type="select" label="Input type"  argument="--input_type">
         <option value="json">MSnPy JSON spectral trees</option>
-        <option value="hdf5" >DIMSpy HDF5 peaklists</option>
+        <option value="h5" >DIMSpy HDF5 peaklists</option>
       </param>
       <when value="json">
         <param name="input_json" type="data" format="json" label="MSnPy Spectral Trees" help="Json that includes molecular formula annotations for the spectra"
@@ -52,7 +52,7 @@
         </param>
       </when>
       <when value="hdf5">
-        <param name="input_hdf5" type="data" format="hdf5" label="DIMSpy peaklists" help="HDF5 with list of DIMSpy PeakList objects"
+        <param name="input_hdf5" type="data" format="h5" label="DIMSpy peaklists" help="HDF5 with list of DIMSpy PeakList objects"
            argument="--input">
           <validator type="empty_field" />
         </param>
@@ -92,16 +92,16 @@
 
   </inputs>
   <outputs>
-        <data format="hdf5" hidden="false" name="merged_hdf5"
+        <data format="h5" hidden="false" name="merged_hdf5"
               from_work_dir="spec_trees_merged_pls.hdf5"
               label="${tool.name} on ${on_string}: hdf5 dimspy-peaklist (merged)">
                <filter>merge_cond['merge']</filter>
         </data>
-        <data format="hdf5" hidden="false" name="non_merged_hdf5"
+        <data format="h5" hidden="false" name="non_merged_hdf5"
               from_work_dir="spec_trees_non_merged_pls.hdf5"
               label="${tool.name} on ${on_string}: hdf5 dimspy-peaklist (non-merged)"/>
 
-        <data format="hdf5" hidden="false" name="precursors_hdf5"
+        <data format="h5" hidden="false" name="precursors_hdf5"
               from_work_dir="spec_trees_ms1_precursors_pls.hdf5"
               label="${tool.name} on ${on_string}: hdf5 dimspy-peaklist (ms1 precursors)" >
               <filter>ms1</filter>
@@ -122,7 +122,7 @@
   </outputs>
   <tests>
     <test>
-      <param name="input_json" value="A06_annotated_trees_subset.json" ftype="json"/>
+      <param name="input_json" value="A06_annotated_trees.json" ftype="json"/>
 
       <output name="merged_hdf5" value="A06_spec_trees_non_merged_pls.hdf5"/>
       <output name="non_merged_hdf5" value="A06_spec_trees_merged_pls.hdf5"/>
