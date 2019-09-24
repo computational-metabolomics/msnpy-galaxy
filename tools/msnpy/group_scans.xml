@@ -50,13 +50,13 @@
   </outputs>
   <tests>
     <test>
-      <param name="input" value="A08_Polar_Daph_WAX1_Phenyl_LCMS_Pos_DIMSn.raw" ftype="thermo.raw"/>
+      <param name="input" value="A08_Apolar_Daph_AMP1_C30_LCMS_Pos_DIMSn_subset.mzML" ftype="mzml"/>
       <param name="merge_ms1" value="true"/>
       <output name="grouped_scans" value="A08_grouped_scans.json"/>
       <output name="grouped_scans_report" value="A08_grouped_scans_report.tsv"/>
     </test>
     <test>
-      <param name="input" value="A08_Polar_Daph_WAX1_Phenyl_LCMS_Pos_DIMSn.raw" ftype="thermo.raw"/>
+      <param name="input" value="A08_Apolar_Daph_AMP1_C30_LCMS_Pos_DIMSn_subset.mzML" ftype="mzml"/>
       <output name="grouped_scans" value="A08_grouped_scans_not_merged.json"/>
       <output name="grouped_scans_report" value="A08_grouped_scans_report_not_merged.tsv"/>
     </test>

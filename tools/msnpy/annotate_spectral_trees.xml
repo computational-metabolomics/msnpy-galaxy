@@ -50,7 +50,7 @@
   </outputs>
   <tests>
     <test>
-      <param name="input" value="A06_spectral_trees_small.json" ftype="json"/>
+      <param name="input" value="A08_spectral_trees.json" ftype="json"/>
 
       <output name="output_trees" value="A08_annotated_trees.json"/>
       <output name="annotations_db" value="A08_mf_annotation_db.sqlite"/>
