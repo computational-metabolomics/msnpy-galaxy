@@ -51,7 +51,7 @@
           <validator type="empty_field" />
         </param>
       </when>
-      <when value="hdf5">
+      <when value="h5">
         <param name="input_hdf5" type="data" format="h5" label="DIMSpy peaklists" help="HDF5 with list of DIMSpy PeakList objects"
            argument="--input">
           <validator type="empty_field" />
@@ -64,8 +64,7 @@
         <when value="--merge">
           <param argument="--ppm" label="Mass tolerance in parts per million." name="ppm" optional="true" type="float" value="5.0"/>
         </when>
-        <when value="false">
-        </when>
+        <when value=""/>
     </conditional>
 
     <conditional name="msp_cond">
@@ -76,8 +75,7 @@
             <option value="massbank" selected="true">European MassBank format</option>
           </param>
         </when>
-        <when value="false">
-        </when>
+        <when value=""/>
     </conditional>
 
     <param argument="--adjust_mz" checked="false" label="" name="adjust_mz" type="boolean" truevalue="--adjust_mz" falsevalue=""/>

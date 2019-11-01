@@ -50,10 +50,10 @@
   </outputs>
   <tests>
     <test>
-      <param name="input" value="A08_spectral_trees.json" ftype="json"/>
-
-      <output name="output_trees" value="A08_annotated_trees.json"/>
-      <output name="annotations_db" value="A08_mf_annotation_db.sqlite"/>
+<!--      <param name="input" value="A08_spectral_trees.json" ftype="json"/>-->
+<!---->
+<!--      <output name="output_trees" value="A08_annotated_trees.json"/>-->
+<!--      <output name="annotation_db" value="A08_mf_annotation_db.sqlite"/>-->
     </test>
   </tests>
 

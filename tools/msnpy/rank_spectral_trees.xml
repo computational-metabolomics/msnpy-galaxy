@@ -23,11 +23,11 @@
     <data format="tsv" hidden="false" name="ranked_trees" label="${tool.name} on ${on_string}: Ranked trees (json)"/>
   </outputs>
   <tests>
-<!--    <test>-->
-<!--      -->
-<!--      <param name="input" value="A08_annotated_trees.json" ftype="json"/>-->
-<!--      <output name="ranked_trees" value="A08_ranked_trees.tsv"/>-->
-<!--    </test>-->
+    <test>
+
+      <param name="input" value="A08_annotated_trees.json" ftype="json"/>
+      <output name="ranked_trees" value="A08_ranked_trees.tsv"/>
+    </test>
   </tests>
   <help>
 Rank annotated spectral trees
