@@ -1,4 +1,4 @@
-<tool id="msnpy_convert_spectral_trees" name="msnpy convert-spectral-trees" version="0.0.1">
+<tool id="msnpy_convert_spectral_trees" name="msnpy convert-spectral-trees" version="@TOOL_VERSION@+galaxy@GALAXY_TOOL_VERSION@">
   <description>Convert spectral trees to MSP files or dimspy PeakList objects</description>
   <macros>
         <import>macros.xml</import>
@@ -43,7 +43,7 @@
     <conditional name="input_type_cond">
       <param name="input_type" type="select" label="Input type"  argument="--input_type">
         <option value="json">MSnPy JSON spectral trees</option>
-        <option value="hdf5" >DIMSpy HDF5 peaklists</option>
+        <option value="h5" >DIMSpy HDF5 peaklists</option>
       </param>
       <when value="json">
         <param name="input_json" type="data" format="json" label="MSnPy Spectral Trees" help="Json that includes molecular formula annotations for the spectra"
@@ -51,8 +51,8 @@
           <validator type="empty_field" />
         </param>
       </when>
-      <when value="hdf5">
-        <param name="input_hdf5" type="data" format="hdf5" label="DIMSpy peaklists" help="HDF5 with list of DIMSpy PeakList objects"
+      <when value="h5">
+        <param name="input_hdf5" type="data" format="h5" label="DIMSpy peaklists" help="HDF5 with list of DIMSpy PeakList objects"
            argument="--input">
           <validator type="empty_field" />
         </param>
@@ -64,8 +64,7 @@
         <when value="--merge">
           <param argument="--ppm" label="Mass tolerance in parts per million." name="ppm" optional="true" type="float" value="5.0"/>
         </when>
-        <when value="false">
-        </when>
+        <when value=""/>
     </conditional>
 
     <conditional name="msp_cond">
@@ -76,11 +75,10 @@
             <option value="massbank" selected="true">European MassBank format</option>
           </param>
         </when>
-        <when value="false">
-        </when>
+        <when value=""/>
     </conditional>
 
-    <param argument="--adjust_mz" checked="true" label="" name="adjust_mz" type="boolean" truevalue="--adjust_mz" falsevalue=""/>
+    <param argument="--adjust_mz" checked="false" label="" name="adjust_mz" type="boolean" truevalue="--adjust_mz" falsevalue=""/>
     <param argument="--ms1" checked="true" label="" name="ms1" type="boolean" truevalue="--ms1" falsevalue=""/>
 
     <param name="polarity" type="select" label="Polarity"  argument="--polarity">
@@ -92,21 +90,19 @@
 
   </inputs>
   <outputs>
-        <data format="hdf5" hidden="false" name="merged_hdf5"
+        <data format="h5" hidden="false" name="merged_hdf5"
               from_work_dir="spec_trees_merged_pls.hdf5"
               label="${tool.name} on ${on_string}: hdf5 dimspy-peaklist (merged)">
                <filter>merge_cond['merge']</filter>
         </data>
-        <data format="hdf5" hidden="false" name="non_merged_hdf5"
+        <data format="h5" hidden="false" name="non_merged_hdf5"
               from_work_dir="spec_trees_non_merged_pls.hdf5"
               label="${tool.name} on ${on_string}: hdf5 dimspy-peaklist (non-merged)"/>
-
-        <data format="hdf5" hidden="false" name="precursors_hdf5"
-              from_work_dir="spec_trees_ms1_precursors_pls.hdf5"
+        <data format="h5" hidden="false" name="precursors_hdf5"
+              from_work_dir="spec_trees_ms1_precursors_pl.hdf5"
               label="${tool.name} on ${on_string}: hdf5 dimspy-peaklist (ms1 precursors)" >
               <filter>ms1</filter>
         </data>
-
         <data format="msp" hidden="false" name="merged_msp" from_work_dir="spec_trees_merged.msp"
               label="${tool.name} on ${on_string}: MSP (merged)">
                <filter>msp_cond['msp'] and merge_cond['merge']</filter>
@@ -122,14 +118,14 @@
   </outputs>
   <tests>
     <test>
-      <param name="input_json" value="A06_annotated_trees_subset.json" ftype="json"/>
-
-      <output name="merged_hdf5" value="A06_spec_trees_non_merged_pls.hdf5"/>
-      <output name="non_merged_hdf5" value="A06_spec_trees_merged_pls.hdf5"/>
-      <output name="precursors_hdf5" value="A06_spec_trees_ms1_precursors_pls.hdf5"/>
-      <output name="merged_msp" value="A06_spec_trees_non_merged_pls.msp"/>
-      <output name="non_merged_msp" value="A06_spec_trees_merged_pls.msp"/>
-      <output name="precursors_msp" value="A06_spec_trees_ms1_precursors_pls.msp"/>
+      <param name="input_json" value="A08_ranked_trees.json" ftype="json"/>
+<!--  To large for github-->
+<!--      <output name="merged_hdf5" value="A08_spec_trees_non_merged_pls.hdf5" compare="sim_size"/>-->
+<!--      <output name="non_merged_hdf5" value="A08_spec_trees_merged_pls.hdf5" compare="sim_size"/>-->
+      <output name="precursors_hdf5" value="A08_spec_trees_ms1_precursors_pl.hdf5" compare="sim_size"/>
+      <output name="merged_msp" value="A08_spec_trees_merged_pls.msp"/>
+      <output name="non_merged_msp" value="A08_spec_trees_non_merged_pls.msp"/>
+      <output name="precursors_msp" value="A08_spec_trees_ms1_precursors_pl.msp"/>
 
     </test>
   </tests>
@@ -145,4 +141,5 @@ Description
 
 
   </help>
+  <expand macro="citations" />
 </tool>

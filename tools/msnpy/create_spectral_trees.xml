@@ -1,4 +1,4 @@
-<tool id="msnpy_create_spectral_trees" name="msnpy create-spectral-trees" version="0.0.1">
+<tool id="msnpy_create_spectral_trees" name="msnpy create-spectral-trees" version="@TOOL_VERSION@+galaxy@GALAXY_TOOL_VERSION@">
   <description>Create spectral trees from processed scan (fragmentation) data.</description>
     <macros>
         <import>macros.xml</import>
@@ -32,9 +32,9 @@
   </outputs>
   <tests>
     <test>
-      <param name="input" value="A06_processed_peaklists.hdf5" ftype="h5"/>
-      <param name="groups" value="A06_grouped_scans.json" ftype="json"/>
-      <output name="spectral_trees" value="A06_spectral_trees.json"/>
+      <param name="input" value="A08_processed_peaklists.hdf5" ftype="h5"/>
+      <param name="groups" value="A08_grouped_scans.json" ftype="json"/>
+      <output name="spectral_trees" value="A08_spectral_trees.json"/>
     </test>
   </tests>
 
@@ -50,4 +50,5 @@ Description
 
 
   </help>
+  <expand macro="citations" />
 </tool>

@@ -1,4 +1,4 @@
-<tool id="msnpy_rank_spectral_trees" name="msnpy rank-spectral-trees" version="0.0.1">
+<tool id="msnpy_rank_spectral_trees" name="msnpy rank-spectral-trees" version="@TOOL_VERSION@+galaxy@GALAXY_TOOL_VERSION@">
   <description>Rank annotated spectral trees.</description>
   <macros>
         <import>macros.xml</import>
@@ -11,21 +11,31 @@
   <command><![CDATA[
     msnpy rank-spectral-trees
       --input $input
-      --output $ranked_trees
+      --rank-threshold $rank_threshold
+      --output-ranks $output_ranks
+      --output-trees $output_trees
 
   ]]></command>
   <inputs>
-    <param name="input" type="data" format="json" label="Spectral trees" help="Json file containing annotated spectral trees" argument="--input">
+    <param name="input" type="data" format="json" label="Spectral trees"
+           help="Json file containing annotated spectral trees" argument="--input">
       <validator type="empty_field" />
+    </param>
+    <param name="rank_threshold"  type="integer" value="0" label="Rank threshold"
+           help="Remove trees that are above a particular rank threshold" argument="--rank-threshold">
     </param>
   </inputs>
   <outputs>
-    <data format="tsv" hidden="false" name="ranked_trees" label="${tool.name} on ${on_string}: Ranked trees (json)"/>
+    <data format="json" hidden="false" name="output_trees"
+          label="${tool.name} on ${on_string}: Ranked trees (json)"/>
+    <data format="tsv" hidden="false" name="output_ranks"
+          label="${tool.name} on ${on_string}: Ranked trees (tsv)"/>
   </outputs>
   <tests>
     <test>
-      <param name="input" value="A06_annotated_trees.json" ftype="json"/>
-      <output name="ranked_trees" value="A06_ranked_trees.tsv"/>
+      <param name="input" value="A08_annotated_trees.json" ftype="json"/>
+      <output name="output_ranks" value="A08_ranked_trees.tsv"/>
+      <output name="output_trees" value="A08_ranked_trees.json"/>
     </test>
   </tests>
   <help>
@@ -40,4 +50,5 @@ Description
 
 
   </help>
+  <expand macro="citations" />
 </tool>
