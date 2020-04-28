@@ -1,74 +1,71 @@
-<tool id="msnpy_annotate_spectral_trees" name="msnpy annotate-spectral-trees" version="@TOOL_VERSION@+galaxy@GALAXY_TOOL_VERSION@">
-  <description>Annotate and/or filter spectral trees.</description>
-  <macros>
+<tool id="msnpy_annotate_spectral_trees" name="MSnPy Annotate Spectral Trees" version="@TOOL_VERSION@+galaxy@GALAXY_TOOL_VERSION@">
+    <description> - Annotate and/or filter spectral trees.</description>
+    <macros>
         <import>macros.xml</import>
-  </macros>
-  <expand macro="requirements" />
-  <stdio>
-    <exit_code level="fatal" range="1:"/>
-  </stdio>
-  <version_command>python msnpy annotate-spectral-trees --version</version_command>
-  <command><![CDATA[
-      msnpy annotate-spectral-trees
-      #if $input and $input is not None:
-        --input $input
-      #end if
+    </macros>
+    <expand macro="requirements" />
+    <stdio>
+        <exit_code level="fatal" range="1:"/>
+    </stdio>
+    <version_command>python msnpy annotate-spectral-trees --version</version_command>
+    <command>
+    <![CDATA[
+        msnpy annotate-spectral-trees
+        #if $input and $input is not None:
+            --input $input
+        #end if
 
-      #if $ppm and $ppm is not None:
-        --ppm $ppm
-      #end if
-      $rules
+        #if $ppm and $ppm is not None:
+            --ppm $ppm
+        #end if
+        $rules
 
-      #if $mf_db and $mf_db is not None:
-        --mf-db $mf_db
-      #end if
+        #if $mf_db and $mf_db is not None:
+            --mf-db $mf_db
+        #end if
 
-      --output-db $annotation_db
-      --output-trees $output_trees
+        --output-db $annotation_db
+        --output-trees $output_trees
 
-      #set repeat_var_6 = '" "'.join([ str($var.adducts) for $var in $repeat_6 ])
-        -a "$repeat_var_6"
-      $filter
+        #set repeat_var_6 = '" "'.join([ str($var.adducts) for $var in $repeat_6 ])
+          -a "$repeat_var_6"
+        $filter
 
-]]></command>
-  <inputs>
-    <param type="data" format="json" label="Spectra trees" help="Json file containing spectral trees" name="input">
-      <validator type="empty_field" />
-    </param>
-    <param argument="--ppm" label="Mass tolerance in Parts per million." name="ppm" optional="true" type="float" value="2.0"/>
-    <param argument="--rules" checked="false" label="" name="rules" type="boolean" truevalue="--rules" falsevalue=""/>
-    <param argument="--mf-db" label="Molecular formulae database" name="mf_db" optional="true" type="text"
-           value="https://mfdb.bham.ac.uk"/>
-    <param argument="--filter" checked="true" label="Filter the spectral tree annotations"
-           name="filter" type="boolean" truevalue="--filter" falsevalue=""/>
-    <repeat min="1" name="repeat_6" title="repeat_title">
-      <param area="false" argument="--adducts" label="Adducts e.g. [M+H]+ [M+NH4]+ [M+Na]+ [M+(39K)]+" name="adducts" optional="true" type="text" value="[M+H]+"/>
-    </repeat>
-
-  </inputs>
-  <outputs>
+    ]]>
+    </command>
+    <inputs>
+        <param type="data" format="json" label="Spectra trees" help="Json file containing spectral trees" name="input">
+            <validator type="empty_field" />
+        </param>
+        <param argument="--ppm" label="Mass tolerance in Parts per million." name="ppm" optional="true" type="float" value="2.0"/>
+        <param argument="--rules" checked="false" label="" name="rules" type="boolean" truevalue="--rules" falsevalue=""/>
+        <param argument="--mf-db" label="Molecular formulae database" name="mf_db" optional="true" type="text"
+               value="https://mfdb.bham.ac.uk"/>
+        <param argument="--filter" checked="true" label="Filter the spectral tree annotations"
+               name="filter" type="boolean" truevalue="--filter" falsevalue=""/>
+        <repeat min="1" name="repeat_6" title="repeat_title">
+            <param area="false" argument="--adducts" label="Adducts e.g. [M+H]+ [M+NH4]+ [M+Na]+ [M+(39K)]+" name="adducts" optional="true" type="text" value="[M+H]+"/>
+        </repeat>
+    </inputs>
+    <outputs>
         <data format="json" hidden="false" name="output_trees" label="${tool.name} on ${on_string}: Spectral trees (json)"/>
         <data format="sqlite" hidden="false" name="annotation_db" label="${tool.name} on ${on_string}: Annotation db (sqlite)"/>
-  </outputs>
-  <tests>
-    <test>
-      <param name="input" value="A08_spectral_trees.json" ftype="json"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="input" value="A08_spectral_trees.json" ftype="json"/>
+            <output name="output_trees" value="A08_annotated_trees.json"/>
+            <output name="annotation_db" value="A08_mf_annotation_db.sqlite"/>
+        </test>
+    </tests>
 
-      <output name="output_trees" value="A08_annotated_trees.json"/>
-      <output name="annotation_db" value="A08_mf_annotation_db.sqlite"/>
-    </test>
-  </tests>
-
-  <help>
+    <help>
 Annotate and filter spectral trees
 ==========================================================================
 
 Description
 ----------------
 
-
-
-
-  </help>
-  <expand macro="citations" />
+    </help>
+    <expand macro="citations" />
 </tool>

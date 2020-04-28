@@ -1,116 +1,125 @@
-<tool id="msnpy_process_scans" name="msnpy process-scans" version="@TOOL_VERSION@+galaxy@GALAXY_TOOL_VERSION@">
-  <description>Process and filter scans.</description>
-  <macros>
+<tool id="msnpy_process_scans" name="MSnPy Process Scans" version="@TOOL_VERSION@+galaxy@GALAXY_TOOL_VERSION@">
+    <description> - Read, filter and average MS scans</description>
+    <macros>
         <import>macros.xml</import>
-  </macros>
-  <expand macro="requirements" />
-  <stdio>
-    <exit_code level="fatal" range="1:"/>
-  </stdio>
-  <version_command>python msnpy process-scans --version</version_command>
-  <command>
+    </macros>
+    <expand macro="requirements" />
+    <stdio>
+        <exit_code level="fatal" range="1:"/>
+    </stdio>
+    <version_command>python msnpy process-scans --version</version_command>
+    <command detect_errors="exit_code">
     <![CDATA[
-
-        #if str( $input).endswith(".dat")
-           ln -s '$input' '$input.name'
-           &&
-        #end if
-
+        ln -s '$input' '$input.name'
+        &&
         msnpy process-scans
 
         --input '$input.name'
 
         #if $groups and $groups is not None:
-          --groups $groups
+            --groups $groups
         #end if
 
-
         #if $function_noise and $function_noise is not None:
-          --function-noise $function_noise
+            --function-noise $function_noise
         #end if
 
         #if $snr_threshold and $snr_threshold is not None:
-          --snr-threshold $snr_threshold
+            --snr-threshold $snr_threshold
         #end if
 
         #if $ppm and $ppm is not None:
-          --ppm $ppm
+            --ppm $ppm
         #end if
 
         #if $min_fraction and $min_fraction is not None:
-          --min-fraction $min_fraction
+            --min-fraction $min_fraction
         #end if
 
         #if $rsd_threshold and $rsd_threshold is not None:
-          --rsd-threshold $rsd_threshold
+            --rsd-threshold $rsd_threshold
         #end if
 
         #if $adv.normalise and $adv.normalise is not None:
-          --normalise $adv.normalise
+            --normalise $adv.normalise
         #end if
 
         #if $adv.repeat_6 and $adv.repeat_6 is not None:
            #set repeat_var_6 = '" "'.join([ str($var.exclusion_list) for $var in $adv.repeat_6 ])
-              --exclusion-list $repeat_var_6
+                --exclusion-list $repeat_var_6
         #end if
 
         #if $adv.ringing_threshold and $adv.ringing_threshold is not None:
-          --ringing-threshold $adv.ringing_threshold
+            --ringing-threshold $adv.ringing_threshold
         #end if
 
         --ncpus=\${GALAXY_SLOTS:-4}
         --output $processed_peaklists
         --report $processed_peaklists_report
     ]]>
-  </command>
-  <inputs>
-    <param name="input" type="data" format="mzml,thermo.raw,raw" label="Single *.mzml or *.raw" argument="--input" >
-      <validator type="empty_field" />
-    </param>
+    </command>
+    <inputs>
+        <conditional name="data">
+            <param name="type" type="select" label="Select the MS data file type?">
+                <option value="mzml" selected="true">*.mzML files</option>
+                <option value="raw">*.raw files</option>
+            </param>
+            <when value="raw">
+                <param name="license_agreement" type="boolean" label="Do you agree to the RawFileReader license terms?" help="*.raw files are read using the RawFileReader reading tool (Copyright © 2016 by Thermo Fisher Scientific, Inc. All rights reserved). To run this tool and process .raw files you must agree to the RawFileReader license terms. Read it at https://github.com/computational-metabolomics/dimspy-galaxy/blob/master/tools/dimspy/RawFileReaderLicense.md. See generic help section of this tool for more details.">
+                    <validator type="expression" message="You must agree to the RawFileReader license terms to run this tool and process *.raw files.">True == value</validator>
+                </param>
+                <param name="input" argument="--input" type="data" format="thermo.raw" multiple="true" label="*.raw file" >
+                    <validator type="empty_field" />
+                </param>
+            </when>
+            <when value="mzml">
+                <param name="input" argument="--input" type="data" format="mzml" multiple="true" label="*.mzML file" >
+                    <validator type="empty_field" />
+                </param>
+            </when>
+        </conditional>
 
-    <param name="groups" type="data" format="json" label="Groups" help="Json or gml file that includes the groups of scans" argument="--groups">
-      <validator type="empty_field" />
-    </param>
-    <param name="function_noise" type="select" label="Noise function" help="Function to calculate the noise from each scan" argument="--function-noise">
-      <option value="median" selected="true">median intensity</option>
-      <option value="mean">mean intensity</option>
-      <option value="mad">mad (mean absolute deviation) intensity</option>
-      <option value="noise_packets">As shown in Xcalibur Qual Browser (Available for *.RAW files only)</option>
-    </param>
-    <param argument="--snr-threshold" label="Signal-to-noise threshold" name="snr_threshold" type="float" value="3.0"/>
-    <param argument="--ppm" label="PPM tolerance" help="Mass tolerance in Parts per million to group peaks across scans / mass spectra" name="ppm" optional="true" type="float" value="2.0"/>
-    <param argument="--min-fraction" label="Min fraction" help="Minimum fraction a peak has to be present. Use 0.0 to not apply this filter." name="min_fraction" optional="true" type="float" value="0.5"/>
-    <param argument="--rsd-threshold" label="RSD threshold" help="Maximum threshold - relative standard deviation (Calculated for peaks that have been measured across a minimum of two scans)." name="rsd_threshold" optional="true" type="float" value="0"/>
-    <section name="adv" title="Show advanced options" expanded="False">
-      <param argument="--normalise" label="Normalise" help="Normalise scans by Total Ion Current (TIC)" name="normalise" optional="true" type="float" value="0"/>
-      <param name="ringing_threshold" type="float" value="0.0" min="0.0" max="1.0" label="Relative intensity threshold used to remove ringing artifacts" help="Select '0' to skip this filter." argument="--ringing-threshold" />
-      <repeat name="repeat_6" title="Exclusion values">
-        <param area="false" argument="--exclusion-list" label="Exclusion list" name="exclusion_list" optional="true" type="float"/>
-      </repeat>
-    </section>
-  </inputs>
-  <outputs>
-    <data format="tsv" hidden="false" name="processed_peaklists_report" label="${tool.name} on ${on_string}: Processed Peaklists (report)" />
-    <data format="h5" hidden="false" name="processed_peaklists" label="${tool.name} on ${on_string}: Processed Peaklists (hdf5)" />
-  </outputs>
-  <tests>
-    <test>
-      <param name="input" value="A08_Apolar_Daph_AMP1_C30_LCMS_Pos_DIMSn_subset.mzML" ftype="mzml"/>
-      <param name="groups" value="A08_grouped_scans.json" ftype="json"/>
-      <output name="processed_peaklists_report" value="A08_processed_peaklists_report.tsv"/>
-      <output name="processed_peaklists" value="A08_processed_peaklists.hdf5" compare="sim_size"/>
-    </test>
+        <param name="groups" type="data" format="json" label="Groups" help="Json or gml file that includes the groups of scans" argument="--groups">
+            <validator type="empty_field" />
+        </param>
+        <param name="function_noise" type="select" label="Noise function" help="Function to calculate the noise from each scan" argument="--function-noise">
+            <option value="median" selected="true">median intensity</option>
+            <option value="mean">mean intensity</option>
+            <option value="mad">mad (mean absolute deviation) intensity</option>
+            <option value="noise_packets">As shown in Xcalibur Qual Browser (Available for *.RAW files only)</option>
+        </param>
+        <param argument="--snr-threshold" label="Signal-to-noise threshold" name="snr_threshold" type="float" value="3.0"/>
+        <param argument="--ppm" label="PPM tolerance" help="Mass tolerance in Parts per million to group peaks across scans / mass spectra" name="ppm" optional="true" type="float" value="2.0"/>
+        <param argument="--min-fraction" label="Min fraction" help="Minimum fraction a peak has to be present. Use 0.0 to not apply this filter." name="min_fraction" optional="true" type="float" value="0.5"/>
+        <param argument="--rsd-threshold" label="RSD threshold" help="Maximum threshold - relative standard deviation (Calculated for peaks that have been measured across a minimum of two scans)." name="rsd_threshold" optional="true" type="float" value="0"/>
+        <section name="adv" title="Show advanced options" expanded="False">
+            <param argument="--normalise" label="Normalise" help="Normalise scans by Total Ion Current (TIC)" name="normalise" optional="true" type="float" value="0"/>
+            <param name="ringing_threshold" type="float" value="0.0" min="0.0" max="1.0" label="Relative intensity threshold used to remove ringing artifacts" help="Select '0' to skip this filter." argument="--ringing-threshold" />
+            <repeat name="repeat_6" title="Exclusion values">
+                <param area="false" argument="--exclusion-list" label="Exclusion list" name="exclusion_list" optional="true" type="float"/>
+            </repeat>
+        </section>
+    </inputs>
+    <outputs>
+        <data format="tsv" hidden="false" name="processed_peaklists_report" label="${tool.name} on ${on_string}: Processed Peaklists (report)" />
+        <data format="h5" hidden="false" name="processed_peaklists" label="${tool.name} on ${on_string}: Processed Peaklists (hdf5)" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input" value="A08_Apolar_Daph_AMP1_C30_LCMS_Pos_DIMSn_subset.mzML" ftype="mzml"/>
+            <param name="groups" value="A08_grouped_scans.json" ftype="json"/>
+            <output name="processed_peaklists_report" value="A08_processed_peaklists_report.tsv"/>
+            <output name="processed_peaklists" value="A08_processed_peaklists.hdf5" compare="sim_size"/>
+        </test>
+    </tests>
 
-  </tests>
-
-  <help>
+    <help>
 Process and filter scans
 ============================================================
 
 Description
 ----------------
 
-
-  </help>
-  <expand macro="citations" />
+    </help>
+    <expand macro="citations" />
 </tool>
