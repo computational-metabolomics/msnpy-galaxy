@@ -27,10 +27,12 @@
         --output-db $annotation_db
         --output-trees $output_trees
 
-        #set repeat_var_6 = '" "'.join([ str($var.adducts) for $var in $repeat_6 ])
-          -a "$repeat_var_6"
+        #if $adducts_cond.adducts_input_type == 'adducts_choose'
+            --adducts $adducts_cond.adducts_choose
+        #else
+           --adducts $adducts_cond.adducts_manual
+        #endif
         $filter
-
     ]]>
     </command>
     <inputs>
@@ -43,9 +45,43 @@
                value="https://mfdb.bham.ac.uk"/>
         <param argument="--filter" checked="true" label="Filter the spectral tree annotations"
                name="filter" type="boolean" truevalue="--filter" falsevalue=""/>
-        <repeat min="1" name="repeat_6" title="repeat_title">
-            <param area="false" argument="--adducts" label="Adducts e.g. [M+H]+ [M+NH4]+ [M+Na]+ [M+(39K)]+" name="adducts" optional="true" type="text" value="[M+H]+"/>
-        </repeat>
+        <conditional name="adducts_cond">
+            <param argument="adducts_input_type" type="select" help="" >
+                <option value="adducts_choose" selected="true" >Choose from list of pre-calculated adducts and masses</option>
+                <option value="adducts_manual" >Manually enter the list of adducts and masses to use</option>
+            </param>
+            <when value="adducts_choose">
+                <param argument="--adducts_choose" type="select" multiple="true" help="" >
+                    <option value="[M+H]+_1.0072764" selected="true" >[M+H]+</option>
+                    <option value="[M+NH4]+_18.0338254" selected="true" >[M+NH4]+</option>
+                    <option value="[M+Na]+_22.9892214" selected="true" >[M+Na]+</option>
+                    <option value="[M+(39K)]+_38.963159399999995">[M+(39K)]+</option>
+                    <option value="[M+(39K)]+_40.961276399999996">[M+(41K))]+</option>
+                    <option value="[M+(6Li)]+_6.0145744">[M+(6Li)]+</option>
+                    <option value="[M+(7Li)]+_7.0154564">[M+(7Li)]+</option>
+                    <option value="[NaCl][M+H]+_58.9658994">[NaCl][M+H]+</option>
+                    <option value="[M+H+HCOOH]+_47.01274598">[M+H+HCOOH]+</option>
+                    <option value="[M+H+NaCl]+_58.96589686">[M+H+NaCl]+</option>
+                    <option value="[M+NH4+HCOOH]+_64.03929298">[M+NH4+HCOOH]+</option>
+                    <option value="[M+Na+HCOOH]+_68.99468798">[M+Na+HCOOH]+</option>
+                    <option value="[M+H+CHOONa]+_68.99471998">[M+H+CHOONa]+</option>
+                    <option value="[M+H+KCl]+_74.93983656">[M+H+KCl]+</option>
+                    <option value="[M+K+HCOOH]+_84.96862798">[M+K+HCOOH]+</option>
+                    <option value="[M-H]-_-1.0072764">[M-H]-</option>
+                    <option value="[M+(35Cl)]-_34.969401600000005">[M+(35Cl)]-</option>
+                    <option value="[M+(37Cl)]-_36.9664516">[M+(37Cl)]-</option>
+                    <option value="[M+Na-2H]-_20.974668599999998" >[M+Na-2H]-</option>
+                    <option value="[M+K-2H]-_36.9486066">[M+K-2H]-</option>
+                    <option value="[M+Hac-H]-_59.0138536">[M+Hac-H]-</option>
+                    <option value="NA_0.0">NA</option>
+                </param>
+            </when>
+            <when value="adducts_manual">
+                <param argument="--adducts_manual" type="text" value=""
+                       help="Adducts and the mass difference separated by an underscore e.g.
+                             [M+H]+_1.0072764 [M+NH4]+_18.0338254 [M+Na]+_22.9892214 " />
+            </when>
+        </conditional>
     </inputs>
     <outputs>
         <data format="json" hidden="false" name="output_trees" label="${tool.name} on ${on_string}: Spectral trees (json)"/>
