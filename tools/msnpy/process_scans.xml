@@ -68,12 +68,12 @@
                 <param name="license_agreement" type="boolean" label="Do you agree to the RawFileReader license terms?" help="*.raw files are read using the RawFileReader reading tool (Copyright © 2016 by Thermo Fisher Scientific, Inc. All rights reserved). To run this tool and process .raw files you must agree to the RawFileReader license terms. Read it at https://github.com/computational-metabolomics/dimspy-galaxy/blob/master/tools/dimspy/RawFileReaderLicense.md. See generic help section of this tool for more details.">
                     <validator type="expression" message="You must agree to the RawFileReader license terms to run this tool and process *.raw files.">True == value</validator>
                 </param>
-                <param name="input" argument="--input" type="data" format="thermo.raw" multiple="true" label="*.raw file" >
+                <param name="input" argument="--input" type="data" format="thermo.raw" label="*.raw file" >
                     <validator type="empty_field" />
                 </param>
             </when>
             <when value="mzml">
-                <param name="input" argument="--input" type="data" format="mzml" multiple="true" label="*.mzML file" >
+                <param name="input" argument="--input" type="data" format="mzml"  label="*.mzML file" >
                     <validator type="empty_field" />
                 </param>
             </when>

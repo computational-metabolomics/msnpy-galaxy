@@ -23,16 +23,16 @@
             --ppm $ppm
         #end if
 
-        #if $ion_mode_cond.adducts_cond.input_type == 'predefined'
+        #if $adducts_cond.input_type == 'predefined'
             #for $a in $ion_mode_cond.adducts_cond.adducts_predefined
                 --adducts $a
             #end for
-        #else if $ion_mode_cond.adducts_cond.input_type == 'manual'
-            #for $a in $ion_mode_cond.adducts_cond.adducts_manual
+        #else if $adducts_cond.input_type == 'manual'
+            #for $a in $adducts_cond.adducts_manual
                 --adducts '$a.name' $a.exact_mass
             #end for
         #else
-           --adducts-file $ion_mode_cond.adducts_cond.adducts_file
+           --adducts-file $adducts_cond.adducts_file
         #end if
 
         $rules
@@ -48,67 +48,39 @@
         </param>
         <param argument="--mf-db" label="Molecular formulae database" name="mf_db" optional="true" type="text"
                value="https://mfdb.bham.ac.uk"/>
-        <conditional name="ion_mode_cond">
-            <param name="type" type="select" label="Ion mode">
+        <param name="type" type="select" label="Ion mode">
                 <option value="pos" selected="True">Positive</option>
                 <option value="neg">Negative</option>
-            </param>
-            <when value="pos">
-                <conditional name="adducts_cond">
-                    <param name="input_type" label="Input type adducts" type="select" help="">
-                        <option value="predefined" selected="True">Predefined list of adducts</option>
-                        <option value="file">Provide a tab-separated text file with a list of adducts</option>
-                        <option value="manual">Enter a list of adducts</option>
-                    </param>
-                    <when value="predefined">
-                        <param argument="adducts_predefined" label="Predefined list of adducts" type="select" help="" multiple="true" display="checkboxes">
-                            <option value="[M+H]+ 1.007276" selected="True">[M+H]+ 1.007276</option>
-                            <option value="[M+Na]+ 22.989221">[M+Na]+ 22.989221</option>
-                            <option value="[M+K]+ 38.963158">[M+K]+ 38.963158</option>
-                        </param>
-                    </when>
-                    <when value="manual">
-                        <repeat name="adducts_manual" title="Adduct" default="1">
-                            <param name="name" type="text" value="[M+H]+" label="Name">
-                                <validator type="empty_field"/>
-                            </param>
-                            <param name="exact_mass" type="float" value="-1.007276" label="Exact mass" />
-                        </repeat>
-                    </when>
-                    <when value="file">
-                        <param name="adducts_file" type="data" format="tsv" label="List of adducts" help="Tab-separated text file containing three columns: name, exact_mass, ion_mode." />
-                    </when>
-                </conditional>
-            </when>
-            <when value="neg">
-                <conditional name="adducts_cond">
-                    <param name="input_type" label="Input type adducts" type="select" help="">
-                        <option value="predefined" selected="True">Predefined list of adducts</option>
-                        <option value="file">Provide a tab-separated text file with a list of adducts</option>
-                        <option value="manual">Enter a list of adducts</option>
-                    </param>
-                    <when value="predefined">
-                        <param argument="adducts_predefined" label="Predefined list of adducts" type="select" help="" multiple="true" display="checkboxes">
-                            <option value="[M-H]- -1.007276" selected="True">[M-H]- -1.007276</option>
-                            <option value="[M+Cl]- 34.969401">[M+Cl]- 34.969401</option>
-                            <option value="[M+Na-2H]- 38.963158">[M+Na-2H]- 20.974668</option>
-                            <option value="[M+K-2H]- 38.963158">[M+K-2H]- 36.948605</option>
-                           <option value="[M+Hac-H]- 38.963158">[M+Hac-H]- 59.013853</option>
-                        </param>
-                    </when>
-                    <when value="manual">
-                        <repeat name="adducts_manual" title="Adduct" default="1">
-                            <param name="name" type="text" value="[M-H]-" label="Name">
-                                <validator type="empty_field"/>
-                            </param>
-                            <param name="exact_mass" type="float" value="-1.007276" label="Exact mass" />
-                        </repeat>
-                    </when>
-                    <when value="file">
-                        <param name="adducts_file" type="data" format="tsv" label="List of adducts" help="Tab-separated text file containing three columns: name, exact_mass, ion_mode." />
-                    </when>
-                </conditional>
-            </when>
+        </param>
+        <conditional name="adducts_cond">
+            <param name="input_type" label="Input type adducts" type="select" help="">
+                <option value="predefined" selected="True">Predefined list of adducts</option>
+               	<option value="file">Provide a tab-separated text file with a list of adducts</option>
+                <option value="manual">Enter a list of adducts</option>
+       	    </param>
+            <when value="predefined">
+                <param argument="adducts_predefined" label="Predefined list of adducts" type="select" help="" multiple="true" display="checkboxes">
+                    <option value="[M+H]+ 1.007276" selected="True">[M+H]+ 1.007276</option>
+                    <option value="[M+Na]+ 22.989221">[M+Na]+ 22.989221</option>
+                    <option value="[M+K]+ 38.963158">[M+K]+ 38.963158</option>
+                    <option value="[M-H]- -1.007276">[M-H]- -1.007276</option>
+                    <option value="[M+Cl]- 34.969401">[M+Cl]- 34.969401</option>
+                    <option value="[M+Na-2H]- 38.963158">[M+Na-2H]- 20.974668</option>
+                    <option value="[M+K-2H]- 38.963158">[M+K-2H]- 36.948605</option>
+                    <option value="[M+Hac-H]- 38.963158">[M+Hac-H]- 59.013853</option>
+                </param>
+           </when>
+           <when value="manual">
+               <repeat name="adducts_manual" title="Adduct" default="1">
+                   <param name="name" type="text" value="[M+H]+" label="Name">
+                       <validator type="empty_field"/>
+                   </param>
+                   <param name="exact_mass" type="float" value="-1.007276" label="Exact mass" />
+              </repeat>              
+           </when>
+           <when value="file">
+               <param name="adducts_file" type="data" format="tsv" label="List of adducts" help="Tab-separated text file containing three columns: name, exact_mass, ion_mode." />
+           </when>
         </conditional>
         <param argument="--ppm" label="Mass tolerance in Parts per million." name="ppm" optional="true" type="float" value="2.0"/>
         <param argument="--rules" checked="true" label="Apply heuristic rules?" name="rules" type="boolean" truevalue="--rules" falsevalue=""/>
