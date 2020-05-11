@@ -12,76 +12,108 @@
     <![CDATA[
         msnpy annotate-spectral-trees
         #if $input and $input is not None:
-            --input $input
+            --input '$input'
         #end if
-
-        #if $ppm and $ppm is not None:
-            --ppm $ppm
-        #end if
-        $rules
 
         #if $mf_db and $mf_db is not None:
             --mf-db $mf_db
         #end if
 
+        #if $ppm and $ppm is not None:
+            --ppm $ppm
+        #end if
+
+        #if $ion_mode_cond.adducts_cond.input_type == 'predefined'
+            #for $a in $ion_mode_cond.adducts_cond.adducts_predefined
+                --adducts $a
+            #end for
+        #else if $ion_mode_cond.adducts_cond.input_type == 'manual'
+            #for $a in $ion_mode_cond.adducts_cond.adducts_manual
+                --adducts '$a.name' $a.exact_mass
+            #end for
+        #else
+           --adducts-file $ion_mode_cond.adducts_cond.adducts_file
+        #end if
+
+        $rules
+        $filter
+
         --output-db $annotation_db
         --output-trees $output_trees
-
-        #if $adducts_cond.adducts_input_type == 'adducts_choose'
-            --adducts $adducts_cond.adducts_choose
-        #else
-           --adducts $adducts_cond.adducts_manual
-        #endif
-        $filter
     ]]>
     </command>
     <inputs>
-        <param type="data" format="json" label="Spectra trees" help="Json file containing spectral trees" name="input">
+        <param name="input" type="data" format="json" label="Spectra trees" help="Json file containing spectral trees">
             <validator type="empty_field" />
         </param>
-        <param argument="--ppm" label="Mass tolerance in Parts per million." name="ppm" optional="true" type="float" value="2.0"/>
-        <param argument="--rules" checked="false" label="" name="rules" type="boolean" truevalue="--rules" falsevalue=""/>
         <param argument="--mf-db" label="Molecular formulae database" name="mf_db" optional="true" type="text"
                value="https://mfdb.bham.ac.uk"/>
-        <param argument="--filter" checked="true" label="Filter the spectral tree annotations"
-               name="filter" type="boolean" truevalue="--filter" falsevalue=""/>
-        <conditional name="adducts_cond">
-            <param argument="adducts_input_type" type="select" help="" >
-                <option value="adducts_choose" selected="true" >Choose from list of pre-calculated adducts and masses</option>
-                <option value="adducts_manual" >Manually enter the list of adducts and masses to use</option>
+        <conditional name="ion_mode_cond">
+            <param name="type" type="select" label="Ion mode">
+                <option value="pos" selected="True">Positive</option>
+                <option value="neg">Negative</option>
             </param>
-            <when value="adducts_choose">
-                <param argument="--adducts_choose" type="select" multiple="true" help="" >
-                    <option value="[M+H]+_1.0072764" selected="true" >[M+H]+</option>
-                    <option value="[M+NH4]+_18.0338254" selected="true" >[M+NH4]+</option>
-                    <option value="[M+Na]+_22.9892214" selected="true" >[M+Na]+</option>
-                    <option value="[M+(39K)]+_38.963159399999995">[M+(39K)]+</option>
-                    <option value="[M+(39K)]+_40.961276399999996">[M+(41K))]+</option>
-                    <option value="[M+(6Li)]+_6.0145744">[M+(6Li)]+</option>
-                    <option value="[M+(7Li)]+_7.0154564">[M+(7Li)]+</option>
-                    <option value="[NaCl][M+H]+_58.9658994">[NaCl][M+H]+</option>
-                    <option value="[M+H+HCOOH]+_47.01274598">[M+H+HCOOH]+</option>
-                    <option value="[M+H+NaCl]+_58.96589686">[M+H+NaCl]+</option>
-                    <option value="[M+NH4+HCOOH]+_64.03929298">[M+NH4+HCOOH]+</option>
-                    <option value="[M+Na+HCOOH]+_68.99468798">[M+Na+HCOOH]+</option>
-                    <option value="[M+H+CHOONa]+_68.99471998">[M+H+CHOONa]+</option>
-                    <option value="[M+H+KCl]+_74.93983656">[M+H+KCl]+</option>
-                    <option value="[M+K+HCOOH]+_84.96862798">[M+K+HCOOH]+</option>
-                    <option value="[M-H]-_-1.0072764">[M-H]-</option>
-                    <option value="[M+(35Cl)]-_34.969401600000005">[M+(35Cl)]-</option>
-                    <option value="[M+(37Cl)]-_36.9664516">[M+(37Cl)]-</option>
-                    <option value="[M+Na-2H]-_20.974668599999998" >[M+Na-2H]-</option>
-                    <option value="[M+K-2H]-_36.9486066">[M+K-2H]-</option>
-                    <option value="[M+Hac-H]-_59.0138536">[M+Hac-H]-</option>
-                    <option value="NA_0.0">NA</option>
-                </param>
+            <when value="pos">
+                <conditional name="adducts_cond">
+                    <param name="input_type" label="Input type adducts" type="select" help="">
+                        <option value="predefined" selected="True">Predefined list of adducts</option>
+                        <option value="file">Provide a tab-separated text file with a list of adducts</option>
+                        <option value="manual">Enter a list of adducts</option>
+                    </param>
+                    <when value="predefined">
+                        <param argument="adducts_predefined" label="Predefined list of adducts" type="select" help="" multiple="true" display="checkboxes">
+                            <option value="[M+H]+ 1.007276" selected="True">[M+H]+ 1.007276</option>
+                            <option value="[M+Na]+ 22.989221">[M+Na]+ 22.989221</option>
+                            <option value="[M+K]+ 38.963158">[M+K]+ 38.963158</option>
+                        </param>
+                    </when>
+                    <when value="manual">
+                        <repeat name="adducts_manual" title="Adduct" default="1">
+                            <param name="name" type="text" value="[M+H]+" label="Name">
+                                <validator type="empty_field"/>
+                            </param>
+                            <param name="exact_mass" type="float" value="-1.007276" label="Exact mass" />
+                        </repeat>
+                    </when>
+                    <when value="file">
+                        <param name="adducts_file" type="data" format="tsv" label="List of adducts" help="Tab-separated text file containing three columns: name, exact_mass, ion_mode." />
+                    </when>
+                </conditional>
             </when>
-            <when value="adducts_manual">
-                <param argument="--adducts_manual" type="text" value=""
-                       help="Adducts and the mass difference separated by an underscore e.g.
-                             [M+H]+_1.0072764 [M+NH4]+_18.0338254 [M+Na]+_22.9892214 " />
+            <when value="neg">
+                <conditional name="adducts_cond">
+                    <param name="input_type" label="Input type adducts" type="select" help="">
+                        <option value="predefined" selected="True">Predefined list of adducts</option>
+                        <option value="file">Provide a tab-separated text file with a list of adducts</option>
+                        <option value="manual">Enter a list of adducts</option>
+                    </param>
+                    <when value="predefined">
+                        <param argument="adducts_predefined" label="Predefined list of adducts" type="select" help="" multiple="true" display="checkboxes">
+                            <option value="[M-H]- -1.007276" selected="True">[M-H]- -1.007276</option>
+                            <option value="[M+Cl]- 34.969401">[M+Cl]- 34.969401</option>
+                            <option value="[M+Na-2H]- 38.963158">[M+Na-2H]- 20.974668</option>
+                            <option value="[M+K-2H]- 38.963158">[M+K-2H]- 36.948605</option>
+                           <option value="[M+Hac-H]- 38.963158">[M+Hac-H]- 59.013853</option>
+                        </param>
+                    </when>
+                    <when value="manual">
+                        <repeat name="adducts_manual" title="Adduct" default="1">
+                            <param name="name" type="text" value="[M-H]-" label="Name">
+                                <validator type="empty_field"/>
+                            </param>
+                            <param name="exact_mass" type="float" value="-1.007276" label="Exact mass" />
+                        </repeat>
+                    </when>
+                    <when value="file">
+                        <param name="adducts_file" type="data" format="tsv" label="List of adducts" help="Tab-separated text file containing three columns: name, exact_mass, ion_mode." />
+                    </when>
+                </conditional>
             </when>
         </conditional>
+        <param argument="--ppm" label="Mass tolerance in Parts per million." name="ppm" optional="true" type="float" value="2.0"/>
+        <param argument="--rules" checked="true" label="Apply heuristic rules?" name="rules" type="boolean" truevalue="--rules" falsevalue=""/>
+        <param argument="--filter" checked="true" label="Filter the spectral tree annotations?"
+               type="boolean" truevalue="--filter" falsevalue=""/>
     </inputs>
     <outputs>
         <data format="json" hidden="false" name="output_trees" label="${tool.name} on ${on_string}: Spectral trees (json)"/>
