@@ -41,7 +41,7 @@
         $filter
         
 	#if $time_limit_cond.time_limit_choice
-	   --time-limit $time_limit_cond.time_limit
+	   --time_limit $time_limit_cond.time_limit
 	#end if
         
         --output-db $annotation_db
