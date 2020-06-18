@@ -22,7 +22,7 @@
         #if $ppm and $ppm is not None:
             --ppm $ppm
         #end if
-
+        --ion-mode $type
         #if $adducts_cond.input_type == 'predefined'
             #for $a in $ion_mode_cond.adducts_cond.adducts_predefined
                 --adducts $a
@@ -37,7 +37,11 @@
 
         $rules
         $filter
-
+        
+	#if $time_limit_cond.time_limit_choice
+	   --time-limit $time_limit_cond.time_limit
+	#end if
+        
         --output-db $annotation_db
         --output-trees $output_trees
     ]]>
@@ -86,6 +90,12 @@
         <param argument="--rules" checked="true" label="Apply heuristic rules?" name="rules" type="boolean" truevalue="--rules" falsevalue=""/>
         <param argument="--filter" checked="true" label="Filter the spectral tree annotations?"
                type="boolean" truevalue="--filter" falsevalue=""/>
+        <conditional name="time_limit_cond">
+        	<param name="time_limit_choice" checked="false" label="Use time limit?" type="boolean" truvalue="true" falsevalue="false" />
+		<when value="true">
+			<param argument="--time-limit" label="Time limit to annotate and filter each tree (seconds)" name="time_limit" optional="true" type="float" value="7200"/>
+		</when>
+	</conditional>
     </inputs>
     <outputs>
         <data format="json" hidden="false" name="output_trees" label="${tool.name} on ${on_string}: Spectral trees (json)"/>
