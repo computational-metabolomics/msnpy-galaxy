@@ -22,7 +22,9 @@
         #if $ppm and $ppm is not None:
             --ppm $ppm
         #end if
+
         --ion-mode $type
+
         #if $adducts_cond.input_type == 'predefined'
             #for $a in $ion_mode_cond.adducts_cond.adducts_predefined
                 --adducts $a
