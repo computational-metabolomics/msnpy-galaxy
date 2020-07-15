@@ -1,5 +1,5 @@
-RECORD_TITLE: header ms1_precursors | msnpy_convert_id 19
-msnpy_convert_id: 19
+RECORD_TITLE: header ms1_precursors | msnpy_convert_id 49
+msnpy_convert_id: 49
 AC$MASS_SPECTROMETRY: ION_MODE NA
 PK$NUM_PEAK: 7
 PK$PEAK: m/z int. rel.int.

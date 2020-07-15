@@ -23,8 +23,10 @@
             --ppm $ppm
         #end if
 
+        --ion-mode $type
+
         #if $adducts_cond.input_type == 'predefined'
-            #for $a in $ion_mode_cond.adducts_cond.adducts_predefined
+            #for $a in $adducts_cond.adducts_predefined
                 --adducts $a
             #end for
         #else if $adducts_cond.input_type == 'manual'
@@ -37,7 +39,12 @@
 
         $rules
         $filter
-        --time-limit $time-limit
+
+	    #if $time_limit_cond.time_limit_choice
+	     --time-limit $time_limit_cond.time_limit
+	    #end if
+        $keep_fragments
+
         --output-db $annotation_db
         --output-trees $output_trees
     ]]>
@@ -86,7 +93,17 @@
         <param argument="--rules" checked="true" label="Apply heuristic rules?" name="rules" type="boolean" truevalue="--rules" falsevalue=""/>
         <param argument="--filter" checked="true" label="Filter the spectral tree annotations?"
                type="boolean" truevalue="--filter" falsevalue=""/>
-        <param argument="--time-limit" label="Time limit to annotate each tree (seconds)" optional="true" type="float" value="7200"/>
+        <param argument="--keep-fragments" name="keep_fragments" checked="false"
+               label="Keep un-annotated fragments?" type="boolean" truevalue="--keep-fragments" falsevalue=""
+               help="Keep fragments from that have not been annotated to a molecular formula (after filtering)."/>
+        <conditional name="time_limit_cond">
+        	<param name="time_limit_choice" checked="false" label="Use time limit?" type="boolean" truevalue="true" falsevalue="false" />
+		<when value="true">
+			<param argument="--time-limit" label="Time limit to annotate and filter each tree (seconds)" name="time_limit" optional="true" type="float" value="7200"/>
+		</when>
+        <when value="false"></when>
+	    </conditional>
+
     </inputs>
     <outputs>
         <data format="json" hidden="false" name="output_trees" label="${tool.name} on ${on_string}: Spectral trees (json)"/>
