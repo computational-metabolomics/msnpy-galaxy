@@ -99,7 +99,7 @@
         <conditional name="time_limit_cond">
         	<param name="time_limit_choice" checked="false" label="Use time limit?" type="boolean" truevalue="true" falsevalue="false" />
 		<when value="true">
-			<param argument="--time-limit" label="Time limit to annotate and filter each tree (seconds)" name="time_limit" optional="true" type="float" value="7200"/>
+			<param argument="--time-limit" label="Time limit to annotate and filter each tree (seconds)" name="time_limit" optional="true" type="integer" value="7200"/>
 		</when>
         <when value="false"></when>
 	    </conditional>
