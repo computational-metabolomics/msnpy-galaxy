@@ -1,54 +1,51 @@
-<tool id="msnpy_rank_spectral_trees" name="msnpy rank-spectral-trees" version="@TOOL_VERSION@+galaxy@GALAXY_TOOL_VERSION@">
-  <description>Rank annotated spectral trees.</description>
-  <macros>
+<tool id="msnpy_rank_spectral_trees" name="MSnPy Rank Spectral Trees" version="@TOOL_VERSION@+galaxy@GALAXY_TOOL_VERSION@">
+    <description> - Rank annotated spectral trees</description>
+    <macros>
         <import>macros.xml</import>
-  </macros>
-  <expand macro="requirements" />
-  <stdio>
-    <exit_code level="fatal" range="1:"/>
-  </stdio>
-  <version_command>python msnpy rank-spectral-trees --version</version_command>
-  <command><![CDATA[
-    msnpy rank-spectral-trees
-      --input $input
-      --rank-threshold $rank_threshold
-      --output-ranks $output_ranks
-      --output-trees $output_trees
-
-  ]]></command>
-  <inputs>
-    <param name="input" type="data" format="json" label="Spectral trees"
-           help="Json file containing annotated spectral trees" argument="--input">
-      <validator type="empty_field" />
-    </param>
-    <param name="rank_threshold"  type="integer" value="0" label="Rank threshold"
-           help="Remove trees that are above a particular rank threshold" argument="--rank-threshold">
-    </param>
-  </inputs>
-  <outputs>
-    <data format="json" hidden="false" name="output_trees"
-          label="${tool.name} on ${on_string}: Ranked trees (json)"/>
-    <data format="tsv" hidden="false" name="output_ranks"
-          label="${tool.name} on ${on_string}: Ranked trees (tsv)"/>
-  </outputs>
-  <tests>
-    <test>
-      <param name="input" value="A08_annotated_trees.json" ftype="json"/>
-      <output name="output_ranks" value="A08_ranked_trees.tsv"/>
-      <output name="output_trees" value="A08_ranked_trees.json"/>
-    </test>
-  </tests>
-  <help>
+    </macros>
+    <expand macro="requirements" />
+    <stdio>
+        <exit_code level="fatal" range="1:"/>
+    </stdio>
+    <version_command>python msnpy rank-spectral-trees --version</version_command>
+    <command detect_errors="exit_code">
+    <![CDATA[
+        msnpy rank-spectral-trees
+        --input $input
+        --rank-threshold $rank_threshold
+        --output-ranks $output_ranks
+        --output-trees $output_trees
+    ]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="json" label="Spectral trees"
+               help="Json file containing annotated spectral trees" argument="--input">
+        <validator type="empty_field" />
+        </param>
+        <param name="rank_threshold"  type="integer" value="0" label="Rank threshold"
+               help="Remove trees that are above a particular rank threshold" argument="--rank-threshold">
+        </param>
+    </inputs>
+    <outputs>
+        <data format="json" hidden="false" name="output_trees"
+              label="${tool.name} on ${on_string}: Ranked trees (json)"/>
+        <data format="tsv" hidden="false" name="output_ranks"
+              label="${tool.name} on ${on_string}: Ranked trees (tsv)"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="input" value="A08_annotated_trees.json" ftype="json"/>
+            <output name="output_ranks" value="A08_ranked_trees.tsv"/>
+            <output name="output_trees" value="A08_ranked_trees.json"/>
+        </test>
+    </tests>
+    <help>
 Rank annotated spectral trees
 ============================================================
 
 Description
 ----------------
 
-
-
-
-
-  </help>
-  <expand macro="citations" />
+    </help>
+    <expand macro="citations" />
 </tool>

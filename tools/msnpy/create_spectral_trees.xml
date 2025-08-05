@@ -1,29 +1,27 @@
-<tool id="msnpy_create_spectral_trees" name="msnpy create-spectral-trees" version="@TOOL_VERSION@+galaxy@GALAXY_TOOL_VERSION@">
-  <description>Create spectral trees from processed scan (fragmentation) data.</description>
+<tool id="msnpy_create_spectral_trees" name="MSnPy Create Spectral Trees" version="@TOOL_VERSION@+galaxy@GALAXY_TOOL_VERSION@">
+    <description> - Create spectral trees from processed scan (fragmentation) data</description>
     <macros>
         <import>macros.xml</import>
-  </macros>
-  <expand macro="requirements" />
-  <stdio>
-    <exit_code level="fatal" range="1:"/>
-  </stdio>
-  <version_command>python msnpy create-spectral-trees --version</version_command>
-  <command><![CDATA[
-          msnpy create-spectral-trees
-          #if $input and $input is not None:
-            --input $input
-          #end if
-          #if $groups and $groups is not None:
-            --groups $groups
-          #end if
-          --output $spectral_trees
-  ]]></command>
-  <inputs>
-    <param name="input" type="data" format="h5" label="HDF5 file (Peaklist objects) from step 'process-scans'." argument="--input" >
-      <validator type="empty_field" />
-    </param>
+    </macros>
+    <expand macro="requirements" />
+    <stdio>
+        <exit_code level="fatal" range="1:"/>
+    </stdio>
+    <version_command>python msnpy create-spectral-trees --version</version_command>
+    <command detect_errors="exit_code">
+    <![CDATA[
+        msnpy create-spectral-trees
+        --input $input
+        --groups $groups
+        --output $spectral_trees
+    ]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="h5" label="HDF5 file (Peaklist objects) from step 'process-scans'." argument="--input" >
+            <validator type="empty_field" />
+        </param>
     <param name="groups" type="data" format="json" label="Groups" help="Json or gml file that includes the groups of scans" argument="--groups">
-      <validator type="empty_field" />
+        <validator type="empty_field" />
     </param>
 
   </inputs>

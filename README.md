@@ -1,1 +1,0 @@
-# msnpy-galaxy
